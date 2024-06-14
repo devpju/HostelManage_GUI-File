@@ -201,7 +201,7 @@ public class UpdateRoom extends javax.swing.JFrame {
             String type = cbbType.getSelectedItem().toString();
             String status = cbbStatus.getSelectedItem().toString();
             String rentCost = txtRentCost.getText();
-            Room updatedRoom = RoomManager.getInstance().createNewRoom(id, area, type, status, rentCost);
+            Room updatedRoom = RoomManager.getInstance().createNewRoom(id, area, type, rentCost, status);
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý sửa thông tin phòng này không?",
                     "Xác nhận thay đổi thông tin phòng trọ")) {
                 Notifications.getInstance().show(Notifications.Type.SUCCESS,

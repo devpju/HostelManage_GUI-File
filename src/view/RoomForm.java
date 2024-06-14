@@ -61,7 +61,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
                     FormatterDisplay.formatPrice(room.getRentCost()), room.getStatus()
                 });
             }
-            System.out.println("Làm mới bảng rooms thành công!");
         } catch (Exception e) {
             System.out.println("Lỗi: " + e.getMessage());
         }

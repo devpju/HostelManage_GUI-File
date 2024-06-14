@@ -343,14 +343,16 @@ public class UpdateTenant extends javax.swing.JFrame {
             String newTenantId = txtIdT.getText();
             String idRoom = tenantForm.getIdRoom();
             Contract updatedContract = ContractManager.getInstance().createNewContract(newContractId, newStartAt, newEndAt, newDeposit);
+            updatedContract.updateStatus();
             Tenant updatedTenant = TenantManager.getInstance().createNewTenant(newTenantId,
                     newName, idRoom, newGender, newDob, newPhone,
                     newAddress, updatedContract);
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin khách thuê không?", "Xác nhận thay đổi thông tin khách thuê")) {
                 TenantManager.getInstance().updateTenantById(newTenantId, updatedTenant);
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 tenantForm.loadDataToTable(TenantManager.getInstance().getTenants());
+                JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
             }
 
         } catch (EmptyInputException e) {

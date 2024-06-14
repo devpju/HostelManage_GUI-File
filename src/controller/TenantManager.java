@@ -18,7 +18,7 @@ public class TenantManager {
     private String idTenant;
 
     private TenantManager() {
-        rooms = RoomManager.getInstance().getRooms();
+        rooms = HostelManager.getInstance().getHostel().getRooms();
     }
 
     public static TenantManager getInstance() {
@@ -34,7 +34,7 @@ public class TenantManager {
         int maxId = 0;
         for (Tenant tenant : tenants) {
             String id = tenant.getId();
-            if (id.startsWith("KT") && id.endsWith(idRoom)) { 
+            if (id.startsWith("KT") && id.endsWith(idRoom)) {
 
                 int num = Integer.parseInt(id.substring(2, id.length() - idRoom.length()));
                 if (num > maxId) {
@@ -65,10 +65,12 @@ public class TenantManager {
     public Tenant createNewTenant(String id, String name, String idRoom, String gender,
             Date dob, String phone, String address, Contract contract)
             throws EmptyInputException, InvalidNameException, InvalidNumberException, InvalidPhoneNumberException {
+
         if (id.trim().isEmpty() || name.trim().isEmpty() || idRoom.trim().isEmpty() || phone.trim().isEmpty()
                 || address.trim().isEmpty()) {
             throw new EmptyInputException("Vui lòng điền đầy đủ thông tin.");
         }
+
         Tenant newTenant = new Tenant();
         newTenant.setId(id);
         newTenant.setName(name);

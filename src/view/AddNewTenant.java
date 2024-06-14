@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view;
 
 import controller.ContractManager;
@@ -12,11 +8,9 @@ import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidNumberException;
 import exception.InvalidPhoneNumberException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import model.Contract;
@@ -25,10 +19,6 @@ import model.Tenant;
 import raven.toast.Notifications;
 import view.component.OptionPaneCustom;
 
-/**
- *
- * @author DevPiu
- */
 public class AddNewTenant extends javax.swing.JFrame {
 
     private TenantForm tenantHome;
@@ -506,11 +496,14 @@ public class AddNewTenant extends javax.swing.JFrame {
             newContract.updateStatus();
             Tenant newTenant = TenantManager.getInstance().createNewTenant(idTenant, nameTenant, roomSelected.getId(),
                     genderTenant, dobTenant, phoneTenant, addressTenant, newContract);
-            System.out.println(newTenant);
+
             TenantManager.getInstance().addNewTenant(roomSelected, newTenant);
+
             Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                    Notifications.Location.TOP_CENTER, "Thêm tài khoản thành công!");
+                    Notifications.Location.TOP_CENTER, "Thêm khách thuê mới thành công!");
+
             loadDataToTable(rooms);
+
             tenantHome.loadDataToTable(TenantManager.getInstance().getTenants());
             txtIdT.setText("");
             txtIdC.setText("");
