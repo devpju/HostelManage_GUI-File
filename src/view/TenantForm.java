@@ -175,6 +175,11 @@ public class TenantForm extends javax.swing.JInternalFrame {
         jButton3.setIconTextGap(-8);
         jButton3.setMargin(new java.awt.Insets(0, 10, 0, 10));
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jToolBar1.add(jButton3);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
@@ -345,6 +350,19 @@ public class TenantForm extends javax.swing.JInternalFrame {
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         new AddNewTenant(this).setVisible(true);
     }//GEN-LAST:event_btnAddMouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        rowSelected = tblTenant.getSelectedRow();
+        try {
+            if (rowSelected == -1) {
+                throw new Exception("Vui lòng chọn khách thuê để sửa!");
+            }
+            tenantSelected = tenantManager.getTenants().get(rowSelected);
+            new DetailTenant(tenantSelected).setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -12,7 +12,6 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Contract;
 import model.Tenant;
-import util.FormatterDisplay;
 import view.component.OptionPaneCustom;
 
 public class UpdateTenant extends javax.swing.JFrame {
