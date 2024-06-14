@@ -34,12 +34,29 @@ public class AccountManager {
         return currentAccount;
     }
 
-    // XỬ LÝ LOGIN
+    // TẠO MỚI 1 TÀI KHOẢN
+    public Account createNewAccount(String username, String password, String name, String phone, String role)
+            throws EmptyInputException, InvalidUsernameException, InvalidPasswordException,
+            InvalidNameException, InvalidPhoneNumberException {
+        if (username.trim().isEmpty() || password.trim().isEmpty() || name.trim().isEmpty() || phone.trim().isEmpty()) {
+            throw new EmptyInputException("Vui lòng điền đầy đủ thông tin.");
+        }
+        Account newAccount = new Account();
+        newAccount.setUsername(username);
+        newAccount.setPassword(password);
+        newAccount.setName(name);
+        newAccount.setPhone(phone);
+        newAccount.setRole(role);
+        return newAccount;
+    }
+
+    // KIỂM TRA TÀI KHOẢN CÓ TỒN TẠI KHÔNG
     public boolean isAccountExist(String username) {
         Account accountToCheck = new Account(username);
         return this.accounts.contains(accountToCheck);
     }
 
+    // XÁC MINH TÀI KHOẢN ĐĂNG NHẬP
     public boolean authenticate(String username, String password)
             throws EmptyInputException, ObjectExistsException {
         if (username.isEmpty() || password.isEmpty()) {
@@ -65,6 +82,7 @@ public class AccountManager {
         AccountDAO.writeAccounts(this.accounts);
     }
 
+    // XỬ LÝ THAY ĐỔI MẬT KHẨU CÁ NHÂN
     public boolean updatePersonalAccountPassword(String newPass)
             throws EmptyInputException, InvalidPasswordException {
         this.currentAccount.setPassword(newPass);
@@ -72,32 +90,19 @@ public class AccountManager {
         return true;
     }
 
-    // XỬ LÝ TÀI KHOẢN NGƯỜI DÙNG
-    public Account createNewAccount(String username, String password, String name, String phone, String role)
-            throws EmptyInputException, InvalidUsernameException, InvalidPasswordException,
-            InvalidNameException, InvalidPhoneNumberException {
-        if (username.trim().isEmpty() || password.trim().isEmpty() || name.trim().isEmpty() || phone.trim().isEmpty()) {
-            throw new EmptyInputException("Vui lòng điền đầy đủ thông tin.");
-        }
-        Account newAccount = new Account();
-        newAccount.setUsername(username);
-        newAccount.setPassword(password);
-        newAccount.setName(name);
-        newAccount.setPhone(phone);
-        newAccount.setRole(role);
-        return newAccount;
-    }
-
+    // THÊM TÀI KHOẢN MỚI
     public void addNewAccount(Account newAccount) {
         this.accounts.add(newAccount);
         AccountDAO.writeAccounts(this.accounts);
     }
 
+    // CẬP NHẬT TÀI KHOẢN
     public void updateAccountInfo(int positionToUpdate, Account updatedAccount) {
         this.accounts.set(positionToUpdate, updatedAccount);
         AccountDAO.writeAccounts(this.accounts);
     }
 
+    // XÓA TÀI KHOẢN
     public void removeAccount(int positionToRemove) {
         this.accounts.remove(positionToRemove);
         AccountDAO.writeAccounts(this.accounts);

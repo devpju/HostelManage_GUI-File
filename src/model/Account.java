@@ -28,7 +28,7 @@ public class Account implements Serializable {
         return username;
     }
 
-    public void setUsername(String username) throws EmptyInputException, InvalidUsernameException {
+    public void setUsername(String username) throws InvalidUsernameException {
         if (!RegexValidator.isValidUsername(username)) {
             throw new InvalidUsernameException("Tên tài khoản tối thiểu 5 ký tự, phải bắt đầu bằng chữ hoa"
                     + " hoặc chữ thường, tiếp theo có thể chứa chữ cái, số và dấu gạch dưới.");
@@ -40,7 +40,7 @@ public class Account implements Serializable {
         return password;
     }
 
-    public void setPassword(String password) throws EmptyInputException, InvalidPasswordException {
+    public void setPassword(String password) throws InvalidPasswordException {
         if (!RegexValidator.isValidPassword(password)) {
             throw new InvalidPasswordException("Mật khẩu tối thiểu 8 ký tự, chứa ít nhất một chữ số, "
                     + "một chữ cái in hoa và một chữ thường.");
@@ -52,7 +52,7 @@ public class Account implements Serializable {
         return name;
     }
 
-    public void setName(String name) throws EmptyInputException, InvalidNameException {
+    public void setName(String name) throws InvalidNameException {
         if (!RegexValidator.isValidName(name)) {
             throw new InvalidNameException("Họ và tên không hợp lệ.");
         }
@@ -63,7 +63,7 @@ public class Account implements Serializable {
         return phone;
     }
 
-    public void setPhone(String phone) throws EmptyInputException, InvalidPhoneNumberException {
+    public void setPhone(String phone) throws InvalidPhoneNumberException {
         if (!RegexValidator.isValidPhoneNumber(phone)) {
             throw new InvalidPhoneNumberException("Số điện thoại không hợp lệ.");
         }

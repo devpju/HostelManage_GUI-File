@@ -26,12 +26,13 @@ public class AccountForm extends javax.swing.JInternalFrame {
         accountManager = AccountManager.getInstance();
         accounts = accountManager.getAccounts();
         initComponents();
-        customeUI();
+        customUI();
         initTable();
         customTable();
         loadDataToTable(accounts);
     }
 
+    // TẠO TABLE
     public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "Tên tài khoản", "Họ và tên", "Số điện thoại", "Vai trò"};
@@ -40,6 +41,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         tblAccount.setAutoCreateRowSorter(true);
     }
 
+    // LOAD DATA CHO TABLE
     public final void loadDataToTable(List<Account> accounts) {
         try {
             int stt = 1;
@@ -55,11 +57,13 @@ public class AccountForm extends javax.swing.JInternalFrame {
         }
     }
 
-    private void customeUI() {
+    // CUSTOM UI
+    private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
 
+    // CUSTOM TABLE
     private void customTable() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
@@ -76,10 +80,12 @@ public class AccountForm extends javax.swing.JInternalFrame {
 
     }
 
+    // LẤY CHỈ SỐ DÒNG ĐƯỢC CHỌN
     public int getRowSelected() {
         return this.rowSelected;
     }
 
+    // LẤY ACCOUNT ĐƯỢC CHỌN
     public Account getAccountSelected() {
         return accountSelected;
     }
@@ -266,10 +272,12 @@ public class AccountForm extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // XỬ LÝ SỰ KIỆN THÊM TÀI KHOẢN
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         new AddNewAccount(this).setVisible(true);
     }//GEN-LAST:event_btnAddMouseClicked
 
+    // XỬ LÝ SỰ KIỆN CẬP NHẬT TÀI KHOẢN
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
         rowSelected = tblAccount.getSelectedRow();
         try {
@@ -288,6 +296,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnUpdateMouseClicked
 
+    // XỬ LÝ SỰ KIỆN XÓA TÀI KHOẢN
     private void btnRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseClicked
         rowSelected = tblAccount.getSelectedRow();
         try {
@@ -311,6 +320,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnRemoveMouseClicked
 
+    // XỬ LÝ SEARCH TÀI KHOẢN
     private void txtSearchInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchInputKeyReleased
         String typeSearch = (String) cbbSearchType.getSelectedItem();
         String searchContent = txtSearchInput.getText();
@@ -330,6 +340,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
         loadDataToTable(result);
     }//GEN-LAST:event_txtSearchInputKeyReleased
 
+    // XỬ LÝ SỰ KIỆN RESET SEARCH
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
         txtSearchInput.setText("");
         cbbSearchType.setSelectedIndex(0);
