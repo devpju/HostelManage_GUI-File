@@ -1,6 +1,7 @@
 package view;
 
 import controller.ContractManager;
+import controller.SearchContract;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -87,11 +88,13 @@ public class ContractForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnUpdate = new javax.swing.JButton();
         btnEnd = new javax.swing.JButton();
         btnCancle = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
@@ -100,6 +103,9 @@ public class ContractForm extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblContract = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
+        status1 = new javax.swing.JRadioButton();
+        status2 = new javax.swing.JRadioButton();
+        status3 = new javax.swing.JRadioButton();
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,6 +146,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(btnEnd);
 
+        btnCancle.setBackground(new java.awt.Color(246, 246, 246));
         btnCancle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnCancle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/cancle.png"))); // NOI18N
         btnCancle.setText("Hủy báo");
@@ -154,6 +161,17 @@ public class ContractForm extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btnCancle);
+
+        jButton1.setBackground(new java.awt.Color(246, 246, 246));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh_ver2.png"))); // NOI18N
+        jButton1.setText("Làm mới");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setIconTextGap(-8);
+        jButton1.setMargin(new java.awt.Insets(0, 10, 0, 10));
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo ngày"));
 
@@ -237,33 +255,72 @@ public class ContractForm extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc theo trạng thái", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
 
+        buttonGroup1.add(status1);
+        status1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        status1.setText("Sắp hết hạn");
+        status1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                status1MouseClicked(evt);
+            }
+        });
+
+        buttonGroup1.add(status2);
+        status2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        status2.setText("Đã hết hạn");
+        status2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                status2MouseClicked(evt);
+            }
+        });
+
+        buttonGroup1.add(status3);
+        status3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        status3.setText("Đã báo hủy");
+        status3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                status3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(status1)
+                .addGap(18, 18, 18)
+                .addComponent(status2)
+                .addGap(18, 18, 18)
+                .addComponent(status3)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 95, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(status1)
+                    .addComponent(status2)
+                    .addComponent(status3))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -329,11 +386,31 @@ public class ContractForm extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnCancleMouseClicked
 
+    private void status1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status1MouseClicked
+        if (status1.isSelected()) {
+            loadDataToTable(SearchContract.searchByStatus(status1.getText()));
+        }
+    }//GEN-LAST:event_status1MouseClicked
+
+    private void status2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status2MouseClicked
+        if (status2.isSelected()) {
+            loadDataToTable(SearchContract.searchByStatus(status2.getText()));
+        }
+    }//GEN-LAST:event_status2MouseClicked
+
+    private void status3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status3MouseClicked
+        if (status3.isSelected()) {
+            loadDataToTable(SearchContract.searchByStatus(status3.getText()));
+        }
+    }//GEN-LAST:event_status3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancle;
     private javax.swing.JButton btnEnd;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
@@ -343,6 +420,9 @@ public class ContractForm extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JRadioButton status1;
+    private javax.swing.JRadioButton status2;
+    private javax.swing.JRadioButton status3;
     private javax.swing.JTable tblContract;
     // End of variables declaration//GEN-END:variables
 }

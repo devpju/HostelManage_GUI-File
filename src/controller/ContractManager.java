@@ -74,12 +74,15 @@ public class ContractManager {
     }
 
     public void cancleContract(String contractId, String newStatus) {
+                System.out.println("1092382039480239840293");
+
         for (Room room : rooms) {
             List<Tenant> tenants = room.getTenants();
             for (Tenant tenant : tenants) {
                 if (contractId.equals(tenant.getContract().getId())) {
                     tenant.getContract().setStatus(newStatus);
                     HostelDAO.updateHostel();
+                    System.out.println("02903840912=");
                     return;
                 }
             }
@@ -87,6 +90,7 @@ public class ContractManager {
     }
 
     public void cancleCancleContract(String contractId) {
+        System.out.println("1092382039480239840293");
         for (Room room : rooms) {
             List<Tenant> tenants = room.getTenants();
             for (Tenant tenant : tenants) {

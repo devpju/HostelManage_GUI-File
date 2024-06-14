@@ -132,6 +132,7 @@ public class CancleContract extends javax.swing.JFrame {
         if (OptionPaneCustom.showOptionDialog(this, "Bạn có muốn lưu lại thay đổi không?", "Xác nhận hủy hợp đồng")) {
             ContractManager.getInstance().cancleContract(contractSelected.getId(), status);
             contractForm.loadDataToTable(ContractManager.getInstance().getContracts());
+            this.dispose();
         }
     }//GEN-LAST:event_btnNotiMouseClicked
 
