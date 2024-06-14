@@ -72,4 +72,31 @@ public class ContractManager {
             }
         }
     }
+
+    public void cancleContract(String contractId, String newStatus) {
+        for (Room room : rooms) {
+            List<Tenant> tenants = room.getTenants();
+            for (Tenant tenant : tenants) {
+                if (contractId.equals(tenant.getContract().getId())) {
+                    tenant.getContract().setStatus(newStatus);
+                    HostelDAO.updateHostel();
+                    return;
+                }
+            }
+        }
+    }
+
+    public void cancleCancleContract(String contractId) {
+        for (Room room : rooms) {
+            List<Tenant> tenants = room.getTenants();
+            for (Tenant tenant : tenants) {
+                if (contractId.equals(tenant.getContract().getId())) {
+                    tenant.getContract().updateStatus();
+                    HostelDAO.updateHostel();
+                    return;
+                }
+            }
+        }
+    }
+
 }

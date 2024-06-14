@@ -7,8 +7,6 @@ import java.awt.HeadlessException;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Contract;
-import model.Tenant;
-import util.FormatterDisplay;
 import view.component.OptionPaneCustom;
 
 public class UpdateContract extends javax.swing.JFrame {
@@ -183,8 +181,6 @@ public class UpdateContract extends javax.swing.JFrame {
             Date startTime = cdateStart.getDate();
             Date endTime = cdateEnd.getDate();
             String depositStr = txtDeposit.getText();
-            System.out.println(startTime);
-            System.out.println(endTime);
             Contract updatedContract = ContractManager.getInstance().createNewContract(id, startTime, endTime, depositStr);
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin hợp đồng không?", "Xác nhận thay đổi thông tin hợp đồng")) {
