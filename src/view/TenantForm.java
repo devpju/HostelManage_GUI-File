@@ -355,7 +355,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
         rowSelected = tblTenant.getSelectedRow();
         try {
             if (rowSelected == -1) {
-                throw new Exception("Vui lòng chọn khách thuê để sửa!");
+                throw new Exception("Vui lòng chọn khách thuê để xem chi tiết!");
             }
             tenantSelected = tenantManager.getTenants().get(rowSelected);
             new DetailTenant(tenantSelected).setVisible(true);

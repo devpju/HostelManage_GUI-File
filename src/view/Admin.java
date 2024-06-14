@@ -545,8 +545,8 @@ public class Admin extends javax.swing.JFrame {
     private void navContractMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navContractMouseClicked
         setColorNav(DEFAULT_BACKGROUND_COLOR, SELECTED_BACKGROUND_COLOR, navContract);
 
-//        ContractForm contractForm = new ContractForm();
-//        updateMainContent(contractForm);
+        ContractForm contractForm = new ContractForm();
+        updateMainContent(contractForm);
     }//GEN-LAST:event_navContractMouseClicked
 
     private void navStatisticMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navStatisticMouseClicked

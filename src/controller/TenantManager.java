@@ -18,7 +18,7 @@ public class TenantManager {
     private String idTenant;
 
     private TenantManager() {
-        rooms = HostelManager.getInstance().getHostel().getRooms();
+        rooms = RoomManager.getInstance().getRooms();
     }
 
     public static TenantManager getInstance() {
@@ -87,6 +87,7 @@ public class TenantManager {
         for (Room room : rooms) {
             if (room.equals(selectedRoom)) {
                 room.getTenants().add(newTenant);
+                System.out.println(newTenant);
                 HostelDAO.updateHostel();
                 return;
             }
