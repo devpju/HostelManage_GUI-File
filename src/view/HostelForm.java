@@ -10,21 +10,21 @@ import view.component.OptionPaneCustom;
 import util.FormatterDisplay;
 
 public final class HostelForm extends javax.swing.JInternalFrame {
-
+    
     private Hostel hostel;
-
+    
     public HostelForm() {
         hostel = HostelManager.getInstance().getHostel();
         initComponents();
         customUI();
         setInfoHostel(hostel);
     }
-
+    
     private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
-
+    
     public void setInfoHostel(Hostel hostel) {
         headingNameHostel.setText(("NHÀ TRỌ " + hostel.getName()).toUpperCase());
         txtNameHostel.setText(hostel.getName());
@@ -34,7 +34,7 @@ public final class HostelForm extends javax.swing.JInternalFrame {
         txtWaterUnit.setText(FormatterDisplay.formatPrice(hostel.getWaterUnitPrice()));
         txtInternetCost.setText(FormatterDisplay.formatPrice(hostel.getInternetCost()));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -240,21 +240,20 @@ public final class HostelForm extends javax.swing.JInternalFrame {
             String internetCostStr = txtInternetCost.getText();
             Hostel updatedHostel = HostelManager.getInstance().createNewHostel(this.hostel.getId(),
                     name, address, phone, elecUnitPriceStr, waterUnitPriceStr, internetCostStr);
-
+            
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin nhà trọ không?",
                     "Xác nhận thay đổi thông tin nhà trọ")) {
-
+                
                 HostelManager.getInstance().updateHostel(updatedHostel);
                 setInfoHostel(updatedHostel);
             }
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
-        } catch (NumberFormatException e) {
-            OptionPaneCustom.showErrorDialog(this, "Đơn giá không hợp lệ.");
         } catch (InvalidNumberException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (InvalidPhoneNumberException e) {
+            txtPhoneHostel.setText("");
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());

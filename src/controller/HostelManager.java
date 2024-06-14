@@ -28,16 +28,21 @@ public class HostelManager {
 
     public Hostel createNewHostel(String id, String name, String address, String phone,
             String elecUnitPriceStr, String waterUnitPriceStr, String internetCostStr)
-            throws EmptyInputException, InvalidNumberException, InvalidPhoneNumberException, NumberFormatException {
+            throws EmptyInputException, InvalidNumberException, InvalidPhoneNumberException {
+
         if (id.trim().isEmpty() || name.trim().isEmpty() || address.trim().isEmpty() || phone.trim().isEmpty()
                 || elecUnitPriceStr.trim().isEmpty() || waterUnitPriceStr.trim().isEmpty()
                 || internetCostStr.trim().isEmpty()) {
             throw new EmptyInputException("Vui lòng điền đầy đủ thông tin.");
         }
-
-        double elecUnitPrice = FormatterDisplay.parsePrice(elecUnitPriceStr);
-        double waterUnitPrice = FormatterDisplay.parsePrice(waterUnitPriceStr);
-        double internetCost = FormatterDisplay.parsePrice(internetCostStr);
+        double elecUnitPrice, waterUnitPrice, internetCost;
+        try {
+            elecUnitPrice = FormatterDisplay.parsePrice(elecUnitPriceStr);
+            waterUnitPrice = FormatterDisplay.parsePrice(waterUnitPriceStr);
+            internetCost = FormatterDisplay.parsePrice(internetCostStr);
+        } catch (NumberFormatException e) {
+            throw new InvalidNumberException("Số tiền không hợp lệ.");
+        }
 
         Hostel newHostel = new Hostel();
         newHostel.setId(id);

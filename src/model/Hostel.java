@@ -46,7 +46,7 @@ public class Hostel implements Serializable {
         return name;
     }
 
-    public void setName(String name) throws EmptyInputException {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -54,7 +54,7 @@ public class Hostel implements Serializable {
         return address;
     }
 
-    public void setAddress(String address) throws EmptyInputException {
+    public void setAddress(String address) {
         this.address = address;
     }
 
@@ -62,7 +62,7 @@ public class Hostel implements Serializable {
         return phone;
     }
 
-    public void setPhone(String phone) throws InvalidPhoneNumberException, EmptyInputException {
+    public void setPhone(String phone) throws InvalidPhoneNumberException {
         if (!RegexValidator.isValidPhoneNumber(phone)) {
             throw new InvalidPhoneNumberException("Số điện thoại không hợp lệ.");
         }
