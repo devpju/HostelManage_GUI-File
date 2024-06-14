@@ -4,7 +4,6 @@ import controller.RoomManager;
 import controller.SearchRoom;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -23,7 +22,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
     public RoomForm() {
         rooms = RoomManager.getInstance().getRooms();
         initComponents();
-        initUI();
+        customUI();
         initTable();
         loadDataToTable(rooms);
 
@@ -37,7 +36,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
         return roomSelected;
     }
 
-    private void initUI() {
+    private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
@@ -309,7 +308,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn phòng để xóa!");
             }
-//
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa phòng này không?",
                     "Xác nhận xóa phòng")) {
                 RoomManager.getInstance().removeRoom(rowSelected);

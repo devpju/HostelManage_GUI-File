@@ -228,8 +228,6 @@ public class AddNewRoom extends javax.swing.JFrame {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (InvalidNumberException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
-        } catch (NumberFormatException e) {
-            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }

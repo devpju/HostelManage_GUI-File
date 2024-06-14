@@ -3,7 +3,6 @@ package controller;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.util.ArrayList;
-import java.util.Formatter;
 import java.util.List;
 import model.Bill;
 import model.Room;
@@ -31,7 +30,7 @@ public class RoomManager {
     }
 
     public Room createNewRoom(String id, String areaStr, String type, String rentCostStr, String status)
-            throws EmptyInputException, InvalidNumberException, NumberFormatException {
+            throws EmptyInputException, InvalidNumberException {
 
         if (id.trim().isEmpty() || areaStr.trim().isEmpty() || rentCostStr.trim().isEmpty()) {
             throw new EmptyInputException("Vui lòng điền đầy đủ thông tin.");
@@ -41,14 +40,14 @@ public class RoomManager {
         try {
             area = Double.parseDouble(areaStr);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Diện tích không hợp lệ.");
+            throw new InvalidNumberException("Diện tích không hợp lệ.");
         }
 
         double rentCost;
         try {
             rentCost = FormatterDisplay.parsePrice(rentCostStr);
         } catch (NumberFormatException e) {
-            throw new NumberFormatException("Giá thuê không hợp lệ.");
+            throw new InvalidNumberException("Giá thuê không hợp lệ.");
         }
 
         Room newRoom = new Room();

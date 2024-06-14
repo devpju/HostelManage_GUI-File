@@ -3,11 +3,8 @@ package view;
 import controller.RoomManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
-import exception.ObjectExistsException;
-import javax.swing.JOptionPane;
 import model.Room;
 import raven.toast.Notifications;
-import util.FormatterDisplay;
 import view.component.OptionPaneCustom;
 
 public class UpdateRoom extends javax.swing.JFrame {
@@ -216,8 +213,6 @@ public class UpdateRoom extends javax.swing.JFrame {
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (InvalidNumberException e) {
-            OptionPaneCustom.showErrorDialog(this, e.getMessage());
-        } catch (NumberFormatException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
