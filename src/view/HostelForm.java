@@ -11,13 +11,13 @@ import util.FormatterDisplay;
 
 public final class HostelForm extends javax.swing.JInternalFrame {
     
-    private Hostel hostel;
+    private HostelManager hostelManager;
     
     public HostelForm() {
-        hostel = HostelManager.getInstance().getHostel();
+        hostelManager = HostelManager.getInstance();
         initComponents();
         customUI();
-        setInfoHostel(hostel);
+        setInfoHostel(hostelManager.getHostel());
     }
     
     private void customUI() {
@@ -227,7 +227,7 @@ public final class HostelForm extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
-        setInfoHostel(this.hostel);
+        setInfoHostel(hostelManager.getHostel());
     }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
@@ -238,7 +238,7 @@ public final class HostelForm extends javax.swing.JInternalFrame {
             String elecUnitPriceStr = txtElecUnit.getText();
             String waterUnitPriceStr = txtWaterUnit.getText();
             String internetCostStr = txtInternetCost.getText();
-            Hostel updatedHostel = HostelManager.getInstance().createNewHostel(this.hostel.getId(),
+            Hostel updatedHostel = HostelManager.getInstance().createNewHostel(hostelManager.getHostel().getId(),
                     name, address, phone, elecUnitPriceStr, waterUnitPriceStr, internetCostStr);
             
             if (OptionPaneCustom.showOptionDialog(this,

@@ -18,18 +18,16 @@ public class AccountForm extends javax.swing.JInternalFrame {
 
     private DefaultTableModel tblModel;
     private AccountManager accountManager;
-    private List<Account> accounts;
     private int rowSelected = -1;
     private Account accountSelected;
 
     public AccountForm() {
         accountManager = AccountManager.getInstance();
-        accounts = accountManager.getAccounts();
         initComponents();
         customUI();
         initTable();
         customTable();
-        loadDataToTable(accounts);
+        loadDataToTable(accountManager.getAccounts());
     }
 
     // TẠO TABLE
@@ -344,7 +342,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
         txtSearchInput.setText("");
         cbbSearchType.setSelectedIndex(0);
-        loadDataToTable(this.accounts);
+        loadDataToTable(accountManager.getAccounts());
     }//GEN-LAST:event_btnResetMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

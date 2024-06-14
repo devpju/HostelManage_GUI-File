@@ -15,16 +15,16 @@ import view.component.OptionPaneCustom;
 public class RoomForm extends javax.swing.JInternalFrame {
 
     private DefaultTableModel tblModel;
-    private List<Room> rooms;
+    private RoomManager roomManager;
     private int rowSelected = -1;
     private Room roomSelected;
 
     public RoomForm() {
-        rooms = RoomManager.getInstance().getRooms();
+        roomManager = RoomManager.getInstance();
         initComponents();
         customUI();
         initTable();
-        loadDataToTable(rooms);
+        loadDataToTable(roomManager.getRooms());
 
     }
 
@@ -88,8 +88,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
         btnRemove = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         cbbSearchType = new javax.swing.JComboBox<>();
         txtSearchInput = new javax.swing.JTextField();
@@ -161,24 +159,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
         jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(jButton3);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add-bill.png"))); // NOI18N
-        jButton1.setText("Thêm hóa đơn");
-        jButton1.setFocusable(false);
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setIconTextGap(-8);
-        jButton1.setMargin(new java.awt.Insets(0, 10, 0, 10));
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton1);
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/add-tenant.png"))); // NOI18N
-        jButton2.setText("Thêm khách");
-        jButton2.setFocusable(false);
-        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setIconTextGap(-8);
-        jButton2.setMargin(new java.awt.Insets(0, 10, 0, 10));
-        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton2);
-
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
         cbbSearchType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -204,10 +184,10 @@ public class RoomForm extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtSearchInput, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtSearchInput)
+                .addGap(18, 18, 18)
                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -263,7 +243,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -294,7 +274,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn tài khoản để chỉnh sửa!");
             }
-            roomSelected = rooms.get(rowSelected);
+            roomSelected = roomManager.getRooms().get(rowSelected);
             new UpdateRoom(this).setVisible(true);
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
@@ -342,7 +322,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
         txtSearchInput.setText("");
         cbbSearchType.setSelectedIndex(0);
-        loadDataToTable(this.rooms);
+        loadDataToTable(roomManager.getRooms());
     }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
@@ -356,8 +336,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbbSearchType;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

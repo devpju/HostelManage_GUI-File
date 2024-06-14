@@ -56,8 +56,14 @@ public class HostelManager {
         return newHostel;
     }
 
-    public void updateHostel(Hostel updatedHostel) {
-        this.hostel = updatedHostel;
+    public void updateHostel(Hostel updatedHostel) throws InvalidPhoneNumberException, InvalidNumberException {
+        this.hostel.setId(updatedHostel.getId());
+        this.hostel.setName(updatedHostel.getName());
+        this.hostel.setAddress(updatedHostel.getAddress());
+        this.hostel.setPhone(updatedHostel.getPhone());
+        this.hostel.setElecUnitPrice(updatedHostel.getElecUnitPrice());
+        this.hostel.setWaterUnitPrice(updatedHostel.getWaterUnitPrice());
+        this.hostel.setInternetCost(updatedHostel.getInternetCost());
         HostelDAO.writeHostel(this.hostel);
     }
 
