@@ -5,7 +5,6 @@ import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import exception.ObjectExistsException;
 import model.Room;
-import raven.toast.Notifications;
 import view.component.OptionPaneCustom;
 
 public class AddNewRoom extends javax.swing.JFrame {
@@ -18,11 +17,6 @@ public class AddNewRoom extends javax.swing.JFrame {
         roomForm = (RoomForm) parent;
         roomManager = RoomManager.getInstance();
         initComponents();
-        initToast();
-    }
-
-    public final void initToast() {
-        Notifications.getInstance().setJFrame(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -215,9 +209,7 @@ public class AddNewRoom extends javax.swing.JFrame {
 
             Room newRoom = roomManager.createNewRoom(id, area, type, rentCost, status);
             roomManager.addNewRoom(newRoom);
-            Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                    Notifications.Location.TOP_CENTER, "Thêm phòng thành công!");
-
+            OptionPaneCustom.showSuccessDialog(this, "Thêm thành công phòng " + id);
             roomForm.loadDataToTable(roomManager.getRooms());
             txtRentCost.setText("");
             txtArea.setText("");

@@ -3,11 +3,14 @@ package view;
 import controller.RoomManager;
 import controller.SearchRoom;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import model.Room;
 import util.FormatterDisplay;
 import view.component.OptionPaneCustom;
@@ -42,11 +45,32 @@ public class RoomForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0 ->
+                        Integer.class;
+                    case 2 ->
+                        Double.class;
+                    case 4 ->
+                        Double.class;
+                    default ->
+                        String.class;
+                };
+            }
+        };
         String[] headerTbl = new String[]{"STT", "ID", "Diện tích", "Loại phòng", "Giá thuê", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblRoom.setModel(tblModel);
         tblRoom.setAutoCreateRowSorter(true);
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblModel);
+        sorter.setComparator(4, (String s1, String s2) -> {
+            double d1 = Double.parseDouble(s1.replace(",", ""));
+            double d2 = Double.parseDouble(s2.replace(",", ""));
+            return Double.compare(d1, d2);
+        });
+        tblRoom.setRowSorter(sorter);
         customTable();
     }
 
@@ -58,7 +82,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
 
                 tblModel.addRow(new Object[]{
                     stt++, room.getId().toUpperCase(), room.getArea(), room.getType(),
-                    FormatterDisplay.formatPrice(room.getRentCost()), room.getStatus()
+                    FormatterDisplay.formatPriceDisplay(room.getRentCost()), room.getStatus()
                 });
             }
         } catch (Exception e) {
@@ -257,30 +281,30 @@ public class RoomForm extends javax.swing.JInternalFrame {
 
     private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
 
-        rowSelected = tblRoom.getSelectedRow();
         try {
-            if (rowSelected == -1) {
-                throw new Exception("Vui lòng chọn tài khoản để chỉnh sửa!");
-            }
+            rowSelected = tblRoom.convertRowIndexToModel(tblRoom.getSelectedRow());
             roomSelected = roomManager.getRooms().get(rowSelected);
             new UpdateRoom(this).setVisible(true);
+        } catch (IndexOutOfBoundsException e) {
+            OptionPaneCustom.showErrorDialog(this, "Vui lòng chọn phòng để sửa.");
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnUpdateMouseClicked
 
     private void btnRemoveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemoveMouseClicked
-        rowSelected = tblRoom.getSelectedRow();
         try {
-            if (rowSelected == -1) {
-                throw new Exception("Vui lòng chọn phòng để xóa!");
-            }
+            rowSelected = tblRoom.convertRowIndexToModel(tblRoom.getSelectedRow());
+            roomSelected = roomManager.getRooms().get(rowSelected);
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa phòng này không?",
                     "Xác nhận xóa phòng")) {
                 RoomManager.getInstance().removeRoom(rowSelected);
                 loadDataToTable(RoomManager.getInstance().getRooms());
+                OptionPaneCustom.showSuccessDialog(this, "Bạn đã xóa phòng " + roomSelected.getId() + " thành công.");
             }
 
+        } catch (IndexOutOfBoundsException e) {
+            OptionPaneCustom.showErrorDialog(this, "Vui lòng chọn phòng để xóa.");
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
@@ -310,7 +334,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
     private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
         txtSearchInput.setText("");
         cbbSearchType.setSelectedIndex(0);
-        loadDataToTable(roomManager.getRooms());
+        tblRoom.setRowSorter(null);
     }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked

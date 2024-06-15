@@ -19,10 +19,6 @@ public class UpdateRoom extends javax.swing.JFrame {
         autoSet();
     }
 
-    public void initToast() {
-        Notifications.getInstance().setJFrame(this);
-    }
-
     public final void autoSet() {
         txtRoomID.setText(roomSelected.getId().toUpperCase());
         txtRentCost.setText(String.format("%.0f", roomSelected.getRentCost()));
@@ -204,8 +200,7 @@ public class UpdateRoom extends javax.swing.JFrame {
             Room updatedRoom = RoomManager.getInstance().createNewRoom(id, area, type, rentCost, status);
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý sửa thông tin phòng này không?",
                     "Xác nhận thay đổi thông tin phòng trọ")) {
-                Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                        Notifications.Location.TOP_CENTER, "Sửa phòng thành công!");
+                OptionPaneCustom.showSuccessDialog(this, "Sửa phòng " + id + " thành công.");
                 RoomManager.getInstance().updateRoom(roomForm.getRowSelected(), updatedRoom);
                 roomForm.loadDataToTable(RoomManager.getInstance().getRooms());
                 this.dispose();

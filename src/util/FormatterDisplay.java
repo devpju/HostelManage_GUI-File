@@ -1,13 +1,20 @@
 package util;
 
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class FormatterDisplay {
 
     public static String formatPrice(double price) {
         return String.format("%,.0f", price);
+    }
+
+    public static String formatPriceDisplay(double number) {
+        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
+        return formatter.format(number);
     }
 
     public static double parsePrice(String priceString) throws NumberFormatException {

@@ -48,6 +48,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
             int stt = 1;
             tblModel.setRowCount(0);
             for (Tenant tenant : tenants) {
+                System.out.println("--------------" + tenant);
                 tblModel.addRow(new Object[]{
                     stt++,
                     tenant.getIdRoom(),
@@ -294,6 +295,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
                 throw new Exception("Vui lòng chọn khách thuê để sửa!");
             }
             tenantSelected = tenantManager.getTenants().get(rowSelected);
+            System.out.println("quy7iw9823984" +tenantSelected);
             new UpdateTenant(this, tenantSelected).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -357,6 +359,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn khách thuê để xem chi tiết!");
             }
+            System.out.println(tenantManager.getTenants().get(rowSelected));
             tenantSelected = tenantManager.getTenants().get(rowSelected);
             new DetailTenant(tenantSelected).setVisible(true);
         } catch (Exception e) {
