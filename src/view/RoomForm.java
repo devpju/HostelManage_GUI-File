@@ -86,8 +86,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JToolBar.Separator();
-        jButton3 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         cbbSearchType = new javax.swing.JComboBox<>();
         txtSearchInput = new javax.swing.JTextField();
@@ -148,16 +146,6 @@ public class RoomForm extends javax.swing.JInternalFrame {
             }
         });
         jToolBar1.add(btnRemove);
-        jToolBar1.add(jSeparator1);
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/detail.png"))); // NOI18N
-        jButton3.setText("Xem chi tiết");
-        jButton3.setFocusable(false);
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setIconTextGap(-8);
-        jButton3.setMargin(new java.awt.Insets(0, 10, 0, 10));
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar1.add(jButton3);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
@@ -336,11 +324,9 @@ public class RoomForm extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbbSearchType;
-    private javax.swing.JButton jButton3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tblRoom;
     private javax.swing.JTextField txtSearchInput;
