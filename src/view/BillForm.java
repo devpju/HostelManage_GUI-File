@@ -4,6 +4,7 @@ import controller.SearchBill;
 import controller.BillManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -102,12 +103,16 @@ public class BillForm extends javax.swing.JInternalFrame {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         cbbSearchType = new javax.swing.JComboBox<>();
         txtSearchInput = new javax.swing.JTextField();
-        btnReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblBill = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        btnFilter = new javax.swing.JButton();
+        cdateMonth = new com.toedter.calendar.JMonthChooser();
+        cdateYear = new com.toedter.calendar.JYearChooser();
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -163,22 +168,28 @@ public class BillForm extends javax.swing.JInternalFrame {
         });
         jToolBar1.add(btnRemove);
 
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh_ver2.png"))); // NOI18N
+        btnReset.setText("Làm mới");
+        btnReset.setFocusable(false);
+        btnReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnReset.setIconTextGap(-8);
+        btnReset.setMargin(new java.awt.Insets(0, 10, 0, 10));
+        btnReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnReset);
+
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
         cbbSearchType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbbSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "ID Khách thuê", "ID Phòng", "Họ và tên", "Giới tính", "Số điện thoại", "Địa chỉ" }));
+        cbbSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "ID Phòng", "ID Hóa đơn", "Trạng thái" }));
 
         txtSearchInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchInputKeyReleased(evt);
-            }
-        });
-
-        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/refresh.png"))); // NOI18N
-        btnReset.setText("Làm mới");
-        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnResetMouseClicked(evt);
             }
         });
 
@@ -187,23 +198,20 @@ public class BillForm extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtSearchInput)
-                .addGap(18, 18, 18)
-                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtSearchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSearchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbbSearchType, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchInput, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         tblBill.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -237,6 +245,46 @@ public class BillForm extends javax.swing.JInternalFrame {
         tblBill.setShowGrid(true);
         jScrollPane1.setViewportView(tblBill);
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo tháng năm"));
+
+        btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/filter.png"))); // NOI18N
+        btnFilter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFilterMouseClicked(evt);
+            }
+        });
+
+        cdateMonth.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cdateMonth.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cdateMonth.setLocale(new Locale("vi", "VN"));
+
+        cdateYear.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        cdateYear.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cdateYear, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnFilter)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnFilter)
+                    .addComponent(cdateYear, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -244,22 +292,25 @@ public class BillForm extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -301,47 +352,51 @@ public class BillForm extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnRemoveMouseClicked
 
     private void txtSearchInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchInputKeyReleased
-//        String luachon = (String) cbbSearchType.getSelectedItem();
-//        String searchContent = txtSearchInput.getText();
-//        List<Bill> result = new ArrayList<>();
-//        switch (luachon) {
-//            case "Tất cả" ->
-//                result = SearchBill.searchAll(searchContent);
-//            case "ID Khách thuê" ->
-//                result = SearchBill.searchById(searchContent);
-//            case "ID Phòng" ->
-//                result = SearchBill.searchByIdRoom(searchContent);
-//            case "Họ và tên" ->
-//                result = SearchBill.searchByName(searchContent);
-//            case "Giới tính" ->
-//                result = SearchBill.searchByGender(searchContent);
-//            case "Số điện thoại" ->
-//                result = SearchBill.searchByPhone(searchContent);
-//            case "Địa chỉ" ->
-//                result = SearchBill.searchByAddress(searchContent);
-//        }
-//        loadDataToTable(result);
+        String luachon = (String) cbbSearchType.getSelectedItem();
+        String searchContent = txtSearchInput.getText();
+        List<Bill> result = new ArrayList<>();
+        switch (luachon) {
+            case "Tất cả" ->
+                result = SearchBill.searchAll(searchContent);
+            case "ID Khách thuê" ->
+                result = SearchBill.searchById(searchContent);
+            case "ID Phòng" ->
+                result = SearchBill.searchByIdRoom(searchContent);
+            case "Trạng thái" ->
+                result = SearchBill.searchByStatus(searchContent);
+        }
+        loadDataToTable(result);
     }//GEN-LAST:event_txtSearchInputKeyReleased
-
-    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
-        txtSearchInput.setText("");
-        cbbSearchType.setSelectedIndex(0);
-        loadDataToTable(billManager.getBills());
-    }//GEN-LAST:event_btnResetMouseClicked
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         new AddNewBill(this).setVisible(true);
     }//GEN-LAST:event_btnAddMouseClicked
 
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        cbbSearchType.setSelectedIndex(0);
+        txtSearchInput.setText("");
+        loadDataToTable(billManager.getBills());
+    }//GEN-LAST:event_btnResetActionPerformed
+
+    private void btnFilterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFilterMouseClicked
+        int month = cdateMonth.getMonth();
+        int year = cdateYear.getYear();
+        loadDataToTable(SearchBill.searchByDate(month, year, txtSearchInput.getText(), cbbSearchType.getSelectedItem().toString()));
+    }//GEN-LAST:event_btnFilterMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnFilter;
     private javax.swing.JButton btnRemove;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbbSearchType;
+    private com.toedter.calendar.JMonthChooser cdateMonth;
+    private com.toedter.calendar.JYearChooser cdateYear;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable tblBill;
