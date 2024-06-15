@@ -2,7 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
+    <Component class="javax.swing.ButtonGroup" name="btnGroupFilter">
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -180,6 +180,9 @@
                 </Property>
                 <Property name="verticalTextPosition" type="int" value="3"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButton1MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -198,13 +201,13 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jDateChooser1" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="cdateStart" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                          <Component id="jDateChooser2" min="-2" pref="150" max="-2" attributes="0"/>
+                          <Component id="cdateEnd" min="-2" pref="150" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -219,8 +222,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jDateChooser1" pref="35" max="32767" attributes="0"/>
-                          <Component id="jDateChooser2" pref="35" max="32767" attributes="0"/>
+                          <Component id="cdateStart" pref="35" max="32767" attributes="0"/>
+                          <Component id="cdateEnd" pref="35" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -228,21 +231,27 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser1">
+            <Component class="com.toedter.calendar.JDateChooser" name="cdateStart">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="cdateStartPropertyChange"/>
+              </Events>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser2">
+            <Component class="com.toedter.calendar.JDateChooser" name="cdateEnd">
               <Properties>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="cdateEndPropertyChange"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
@@ -368,7 +377,7 @@
             <Component class="javax.swing.JRadioButton" name="status1">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="buttonGroup1"/>
+                  <ComponentRef name="btnGroupFilter"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -382,7 +391,7 @@
             <Component class="javax.swing.JRadioButton" name="status2">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="buttonGroup1"/>
+                  <ComponentRef name="btnGroupFilter"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
@@ -396,7 +405,7 @@
             <Component class="javax.swing.JRadioButton" name="status3">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="buttonGroup1"/>
+                  <ComponentRef name="btnGroupFilter"/>
                 </Property>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>

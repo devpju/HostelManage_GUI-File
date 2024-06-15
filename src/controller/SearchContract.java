@@ -1,8 +1,12 @@
 package controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import model.Contract;
+import util.DateConverter;
 
 public class SearchContract {
 
@@ -39,5 +43,27 @@ public class SearchContract {
             }
         }
         return result;
+    }
+
+    public static List<Contract> searchByDate(Date start, Date end) {
+        List<Contract> result = new ArrayList<>();
+
+        LocalDate startDate = DateConverter.toLocalDate(start);
+        LocalDate endDate = DateConverter.toLocalDate(end);
+
+        for (Contract contract : contracts) {
+            LocalDate startAt = DateConverter.toLocalDate(contract.getStartAt());
+            LocalDate endAt = DateConverter.toLocalDate(contract.getEndAt());
+
+            if (startAt != null && endAt != null && isDateInRange(startDate, endDate, startAt, endAt)) {
+                result.add(contract);
+            }
+        }
+
+        return result;
+    }
+
+    private static boolean isDateInRange(LocalDate startRange, LocalDate endRange, LocalDate startDate, LocalDate endDate) {
+        return !startDate.isBefore(startRange) && !endDate.isAfter(endRange);
     }
 }

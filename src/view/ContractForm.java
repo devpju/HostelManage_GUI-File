@@ -2,6 +2,7 @@ package view;
 
 import controller.ContractManager;
 import controller.SearchContract;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -88,7 +89,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btnGroupFilter = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         btnUpdate = new javax.swing.JButton();
@@ -96,8 +97,8 @@ public class ContractForm extends javax.swing.JInternalFrame {
         btnCancle = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        cdateStart = new com.toedter.calendar.JDateChooser();
+        cdateEnd = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -171,15 +172,30 @@ public class ContractForm extends javax.swing.JInternalFrame {
         jButton1.setIconTextGap(-8);
         jButton1.setMargin(new java.awt.Insets(0, 10, 0, 10));
         jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
         jToolBar1.add(jButton1);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc theo ngày"));
 
-        jDateChooser1.setDateFormatString("dd/MM/yyyy");
-        jDateChooser1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateStart.setDateFormatString("dd/MM/yyyy");
+        cdateStart.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateStart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cdateStartPropertyChange(evt);
+            }
+        });
 
-        jDateChooser2.setDateFormatString("dd/MM/yyyy");
-        jDateChooser2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateEnd.setDateFormatString("dd/MM/yyyy");
+        cdateEnd.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateEnd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cdateEndPropertyChange(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Ngày bắt đầu:");
@@ -194,12 +210,12 @@ public class ContractForm extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cdateStart, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(cdateEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +226,8 @@ public class ContractForm extends javax.swing.JInternalFrame {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
+                    .addComponent(cdateStart, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(cdateEnd, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -255,7 +271,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lọc theo trạng thái", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
 
-        buttonGroup1.add(status1);
+        btnGroupFilter.add(status1);
         status1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         status1.setText("Sắp hết hạn");
         status1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -264,7 +280,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonGroup1.add(status2);
+        btnGroupFilter.add(status2);
         status2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         status2.setText("Đã hết hạn");
         status2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -273,7 +289,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
             }
         });
 
-        buttonGroup1.add(status3);
+        btnGroupFilter.add(status3);
         status3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         status3.setText("Đã báo hủy");
         status3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -389,30 +405,65 @@ public class ContractForm extends javax.swing.JInternalFrame {
     private void status1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status1MouseClicked
         if (status1.isSelected()) {
             loadDataToTable(SearchContract.searchByStatus(status1.getText()));
+            cdateStart.setDate(null);
+            cdateEnd.setDate(null);
         }
     }//GEN-LAST:event_status1MouseClicked
 
     private void status2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status2MouseClicked
         if (status2.isSelected()) {
             loadDataToTable(SearchContract.searchByStatus(status2.getText()));
+            cdateStart.setDate(null);
+            cdateEnd.setDate(null);
         }
     }//GEN-LAST:event_status2MouseClicked
 
     private void status3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_status3MouseClicked
         if (status3.isSelected()) {
             loadDataToTable(SearchContract.searchByStatus(status3.getText()));
+            cdateStart.setDate(null);
+            cdateEnd.setDate(null);
         }
     }//GEN-LAST:event_status3MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        btnGroupFilter.clearSelection();
+        cdateStart.setDate(null);
+        cdateEnd.setDate(null);
+        loadDataToTable(ContractManager.getInstance().getContracts());
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void cdateStartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cdateStartPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            Date startDate = cdateStart.getDate();
+            Date endDate = cdateEnd.getDate();
+            if (startDate != null && endDate != null) {
+                btnGroupFilter.clearSelection();
+                loadDataToTable(SearchContract.searchByDate(startDate, endDate));
+            }
+        }
+    }//GEN-LAST:event_cdateStartPropertyChange
+
+    private void cdateEndPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cdateEndPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            Date startDate = cdateStart.getDate();
+            Date endDate = cdateEnd.getDate();
+            if (startDate != null && endDate != null) {
+                btnGroupFilter.clearSelection();
+                loadDataToTable(SearchContract.searchByDate(startDate, endDate));
+            }
+        }
+    }//GEN-LAST:event_cdateEndPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancle;
     private javax.swing.JButton btnEnd;
+    private javax.swing.ButtonGroup btnGroupFilter;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JDateChooser cdateEnd;
+    private com.toedter.calendar.JDateChooser cdateStart;
     private javax.swing.JButton jButton1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
