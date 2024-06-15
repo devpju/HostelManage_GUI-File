@@ -358,7 +358,7 @@ public class BillForm extends javax.swing.JInternalFrame {
         switch (luachon) {
             case "Tất cả" ->
                 result = SearchBill.searchAll(searchContent);
-            case "ID Khách thuê" ->
+            case "ID Hóa đơn" ->
                 result = SearchBill.searchById(searchContent);
             case "ID Phòng" ->
                 result = SearchBill.searchByIdRoom(searchContent);

@@ -552,8 +552,8 @@ public class Admin extends javax.swing.JFrame {
     private void navStatisticMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navStatisticMouseClicked
         setColorNav(DEFAULT_BACKGROUND_COLOR, SELECTED_BACKGROUND_COLOR, navStatistic);
 
-//        StatisticForm statisticForm = new StatisticForm();
-//        updateMainContent(statisticForm);
+        StatisticForm statisticForm = new StatisticForm();
+        updateMainContent(statisticForm);
     }//GEN-LAST:event_navStatisticMouseClicked
 
     private void navChangeInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navChangeInfoMouseClicked

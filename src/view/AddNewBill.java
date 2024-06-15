@@ -445,11 +445,11 @@ public class AddNewBill extends javax.swing.JFrame {
     private void tblRoomChooserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoomChooserMouseClicked
         rowSelected = tblRoomChooser.getSelectedRow();
         roomSelected = RoomManager.getInstance().getRooms().get(rowSelected);
-        System.out.println(roomSelected);
         txtIdBill.setText(BillManager.getInstance().createIdBill(roomSelected));
         txtInterCost.setText(FormatterDisplay.formatPrice(HostelManager.getInstance().getHostel().getInternetCost()));
         Date currentDate = new Date();
         cdateStartAt.setDate(currentDate);
+
     }//GEN-LAST:event_tblRoomChooserMouseClicked
 
     private void btnAddTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddTMouseClicked
