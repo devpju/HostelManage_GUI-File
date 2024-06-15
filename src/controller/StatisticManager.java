@@ -1,15 +1,21 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import model.Account;
+import model.Bill;
 import model.Room;
+import model.StatisticByMonth;
 import model.Tenant;
 
 public class StatisticManager {
 
     private static StatisticManager instance;
+    private List<Bill> bills;
 
     private StatisticManager() {
+        bills = BillManager.getInstance().getBills();
     }
 
     public static StatisticManager getInstance() {
@@ -33,6 +39,34 @@ public class StatisticManager {
             }
         }
         return count;
+    }
+
+    public List<StatisticByMonth> getRevenueByMonth(int year) {
+        List<StatisticByMonth> revenues = new ArrayList<>();
+
+        for (int i = 0; i < 12; i++) {
+            int month = i;
+            double totalElectricityCost = 0.0;
+            double totalWaterCost = 0.0;
+            double totalRoomRevenue = 0.0;
+            double totalRevenue = 0.0;
+            for (Bill bill : bills) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(bill.getStartAt());
+
+                if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
+                    totalElectricityCost += bill.ElecCost();
+                    totalWaterCost += bill.WaterCost();
+                    totalRoomRevenue += (bill.sumCost() - bill.ElecCost() - bill.WaterCost());
+                    totalRevenue += bill.sumCost();
+                }
+            }
+
+            StatisticByMonth statistic = new StatisticByMonth(month + 1, totalElectricityCost, totalWaterCost, totalRoomRevenue, totalRevenue);
+            revenues.add(statistic);
+        }
+
+        return revenues;
     }
 
     public int getQuantityTenantRenting() {
