@@ -538,8 +538,8 @@ public class Admin extends javax.swing.JFrame {
     private void navBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navBillMouseClicked
         setColorNav(DEFAULT_BACKGROUND_COLOR, SELECTED_BACKGROUND_COLOR, navBill);
 
-//        BillForm billForm = new BillForm();
-//        updateMainContent(billForm);
+        BillForm billForm = new BillForm();
+        updateMainContent(billForm);
     }//GEN-LAST:event_navBillMouseClicked
 
     private void navContractMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navContractMouseClicked

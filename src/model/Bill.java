@@ -1,14 +1,18 @@
 package model;
 
 import controller.HostelManager;
+import exception.InvalidNumberException;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
 
 public class Bill implements Serializable {
 
     private String id;
-    private String startAt;
-    private double numberElec;
-    private double numberWater;
+    private String idRoom;
+    private Date startAt;
+    private int numberElec;
+    private int numberWater;
     private double internetCost;
     private double elecUnitPrice;
     private double waterUnitPrice;
@@ -17,22 +21,22 @@ public class Bill implements Serializable {
     public Bill() {
     }
 
-    public Bill(String id, String startAt, double numberElec, double numberWater, String status) {
+    public Bill(String id, String idRoom, Date startAt, int numberElec, int numberWater, String status) {
         this.id = id;
         this.startAt = startAt;
         this.numberElec = numberElec;
         this.numberWater = numberWater;
         this.status = status;
-        autoSetUnitPrice();
+        setUnitPrice();
     }
 
-    public final void autoSetUnitPrice() {
+    public final void setUnitPrice() {
         Hostel hostel = HostelManager.getInstance().getHostel();
         this.elecUnitPrice = hostel.getElecUnitPrice();
         this.waterUnitPrice = hostel.getWaterUnitPrice();
         this.internetCost = hostel.getInternetCost();
     }
-    
+
     public String getId() {
         return id;
     }
@@ -41,27 +45,41 @@ public class Bill implements Serializable {
         this.id = id;
     }
 
-    public String getStartAt() {
+    public Date getStartAt() {
         return startAt;
     }
 
-    public void setStartAt(String startAt) {
+    public void setStartAt(Date startAt) {
         this.startAt = startAt;
     }
 
-    public double getNumberElec() {
+    public int getNumberElec() {
         return numberElec;
     }
 
-    public void setNumberElec(double numberElec) {
+    public String getIdRoom() {
+        return idRoom;
+    }
+
+    public void setIdRoom(String idRoom) {
+        this.idRoom = idRoom;
+    }
+
+    public void setNumberElec(int numberElec) throws InvalidNumberException {
+        if (numberElec <= 0) {
+            throw new InvalidNumberException("Số điện phải lớn hơn 0.");
+        }
         this.numberElec = numberElec;
     }
 
-    public double getNumberWater() {
+    public int getNumberWater() {
         return numberWater;
     }
 
-    public void setNumberWater(double numberWater) {
+    public void setNumberWater(int numberWater) throws InvalidNumberException {
+        if (numberWater <= 0) {
+            throw new InvalidNumberException("Số nước phải lớn hơn 0.");
+        }
         this.numberWater = numberWater;
     }
 
@@ -110,8 +128,30 @@ public class Bill implements Serializable {
     }
 
     @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Bill other = (Bill) obj;
+        return Objects.equals(this.id, other.id);
+    }
+
+    @Override
     public String toString() {
-        return "Bill{" + "id=" + id + ", startAt=" + startAt + ", numberElec=" + numberElec + ", numberWater=" + numberWater + ", internetCost=" + internetCost + ", elecUnitPrice=" + elecUnitPrice + ", waterUnitPrice=" + waterUnitPrice + '}';
+        return "Bill{" + "id=" + id + ", idRoom=" + idRoom + ", startAt=" + startAt + ", numberElec=" + numberElec + ", numberWater=" + numberWater + ", internetCost=" + internetCost + ", elecUnitPrice=" + elecUnitPrice + ", waterUnitPrice=" + waterUnitPrice + ", status=" + status + '}';
     }
 
 }
