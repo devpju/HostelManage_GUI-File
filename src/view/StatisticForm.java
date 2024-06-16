@@ -20,11 +20,10 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         initComponents();
         customUI();
         setHeader();
-        updateChart(2024);
-
         LocalDate currentDate = LocalDate.now();
         int month = currentDate.getMonthValue();
         int year = currentDate.getYear();
+        updateChart(year);
         setStatisticFilterBill(month, year);
 
     }
@@ -238,7 +237,6 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Biểu đồ thống kê doanh thu năm");
 
-        cdateYearChart.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cdateYearChart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 cdateYearChartPropertyChange(evt);
@@ -274,7 +272,6 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         cdateMonth.setLocale(new Locale("vi", "VN"));
 
         cdateYear.setBackground(new java.awt.Color(255, 255, 255));
-        cdateYear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnFilter.setBackground(new java.awt.Color(246, 246, 246));
         btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/sta-search.png"))); // NOI18N
@@ -285,31 +282,33 @@ public class StatisticForm extends javax.swing.JInternalFrame {
             }
         });
 
+        txtTotalNumberElec.setEditable(false);
         txtTotalNumberElec.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalNumberElec.setText("jTextField1");
 
+        txtTotalElecCost.setEditable(false);
         txtTotalElecCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalElecCost.setText("jTextField2");
 
+        txtTotalNumberWater.setEditable(false);
         txtTotalNumberWater.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalNumberWater.setText("jTextField3");
 
+        txtTotalWaterCost.setEditable(false);
         txtTotalWaterCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalWaterCost.setText("jTextField4");
 
+        txtTotalInternetCost.setEditable(false);
         txtTotalInternetCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalInternetCost.setText("jTextField5");
 
+        txtTotalRentCost.setEditable(false);
         txtTotalRentCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalRentCost.setText("jTextField6");
 
+        txtTotalRevenue.setEditable(false);
         txtTotalRevenue.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtTotalRevenue.setText("jTextField1");
-        txtTotalRevenue.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTotalRevenueActionPerformed(evt);
-            }
-        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Số điện:");
@@ -418,14 +417,13 @@ public class StatisticForm extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -453,10 +451,6 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         int month = cdateMonth.getMonth() + 1;
         setStatisticFilterBill(month, year);
     }//GEN-LAST:event_btnFilterMouseClicked
-
-    private void txtTotalRevenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalRevenueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTotalRevenueActionPerformed
 
     private void cdateYearChartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cdateYearChartPropertyChange
         updateChart(cdateYearChart.getYear());
