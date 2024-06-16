@@ -6,7 +6,7 @@ import java.util.List;
 import model.Account;
 import model.Bill;
 import model.Room;
-import model.StatisticByMonth;
+import model.Statistic.StatisticByMonthChart;
 import model.Tenant;
 
 public class StatisticManager {
@@ -41,8 +41,8 @@ public class StatisticManager {
         return count;
     }
 
-    public List<StatisticByMonth> getRevenueByMonth(int year) {
-        List<StatisticByMonth> revenues = new ArrayList<>();
+    public List<StatisticByMonthChart> getRevenueByMonth(int year) {
+        List<StatisticByMonthChart> revenues = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
             int month = i;
             double totalElectricityCost = 0.0;
@@ -53,7 +53,6 @@ public class StatisticManager {
                 if (bill.getStatus().equals("Đã thanh toán")) {
                     Calendar cal = Calendar.getInstance();
                     cal.setTime(bill.getStartAt());
-
                     if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
                         totalElectricityCost += bill.ElecCost();
                         totalWaterCost += bill.WaterCost();
@@ -63,7 +62,7 @@ public class StatisticManager {
                 }
             }
 
-            StatisticByMonth statistic = new StatisticByMonth(month + 1, totalElectricityCost, totalWaterCost, totalRoomRevenue, totalRevenue);
+            StatisticByMonthChart statistic = new StatisticByMonthChart(month + 1, totalElectricityCost, totalWaterCost, totalRoomRevenue, totalRevenue);
             revenues.add(statistic);
         }
 

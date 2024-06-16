@@ -1,6 +1,6 @@
-package model;
+package model.Statistic;
 
-public class StatisticByMonth {
+public class StatisticByMonthChart {
 
     private int month;
     private double totalElectricityCost;
@@ -8,10 +8,10 @@ public class StatisticByMonth {
     private double totalRoomRevenue;
     private double totalRevenue;
 
-    public StatisticByMonth() {
+    public StatisticByMonthChart() {
     }
 
-    public StatisticByMonth(int month, double totalElectricityCost, double totalWaterCost, double totalRoomRevenue, double totalRevenue) {
+    public StatisticByMonthChart(int month, double totalElectricityCost, double totalWaterCost, double totalRoomRevenue, double totalRevenue) {
         this.month = month;
         this.totalElectricityCost = totalElectricityCost;
         this.totalWaterCost = totalWaterCost;

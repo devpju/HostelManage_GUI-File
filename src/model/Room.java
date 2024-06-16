@@ -122,7 +122,7 @@ public class Room implements Serializable {
     }
 
     public void autoSetStatus() {
-        if (this.status.equals("Đang sửa chữa")) { 
+        if (this.status.equals("Đang sửa chữa")) {
             return;
         }
         if (!this.tenants.isEmpty()) {
@@ -136,10 +136,6 @@ public class Room implements Serializable {
     @Override
     public String toString() {
         return "Room{" + "id=" + id + ", area=" + area + ", type=" + type + ", rentCost=" + rentCost + ", status=" + status + ", tenants=" + tenants + ", bills=" + bills + '}';
-    }
-
-    private Exception InvalidNumberException(String diện_tích_phòng_phải_lớn_hơn_0) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
