@@ -86,8 +86,7 @@ public class BillForm extends javax.swing.JInternalFrame {
         tblBill.getColumnModel().getColumn(0).setMaxWidth(70);
         tblBill.getColumnModel().getColumn(4).setMaxWidth(70);
         tblBill.getColumnModel().getColumn(6).setMaxWidth(70);
-        tblBill.getColumnModel().getColumn(10).setMinWidth(130);
-
+        tblBill.getColumnModel().getColumn(11).setMinWidth(130);
     }
 
     public String getIdRoom() {
