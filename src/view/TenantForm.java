@@ -3,6 +3,7 @@ package view;
 import controller.search.SearchTenant;
 import controller.manager.TenantManager;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -10,17 +11,18 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 import model.Tenant;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class TenantForm extends javax.swing.JInternalFrame {
-    
+
     private DefaultTableModel tblModel;
     private int rowSelected = -1;
     private Tenant tenantSelected;
     private TenantManager tenantManager;
-    
+
     public TenantForm() {
         tenantManager = TenantManager.getInstance();
         initComponents();
@@ -29,20 +31,32 @@ public class TenantForm extends javax.swing.JInternalFrame {
         customTable();
         customUI();
     }
-    
+
     private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
-    
+
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 5) {
+                    return Date.class;
+                } else {
+                    return String.class;
+                }
+            }
+        };
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ", "Thời hạn hợp đồng"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblTenant.setModel(tblModel);
-        tblTenant.setAutoCreateRowSorter(true);
+
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tblModel);
+        tblTenant.setRowSorter(sorter);
+
     }
-    
+
     public final void loadDataToTable(List<Tenant> tenants) {
         try {
             int stt = 1;
@@ -55,7 +69,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
                     tenant.getName(),
                     tenant.getGender(),
                     FormatterUtil.formatDate(tenant.getDob()),
-                    tenant.getPhone(),
+                    FormatterUtil.formatPhoneNumber(tenant.getPhone()),
                     tenant.getAddress(),
                     tenant.getContract().getStatus()
                 });
@@ -64,11 +78,11 @@ public class TenantForm extends javax.swing.JInternalFrame {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
-    
+
     private void customTable() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-        
+
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
         for (int i = 0; i < tblTenant.getColumnCount(); i++) {
@@ -89,11 +103,11 @@ public class TenantForm extends javax.swing.JInternalFrame {
         tcm.getColumn(2).setMinWidth(100);
         tcm.getColumn(4).setMaxWidth(100);
     }
-    
+
     public String getIdRoom() {
         return tblTenant.getValueAt(rowSelected, 1).toString();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -184,7 +198,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm kiếm"));
 
         cbbSearchType.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cbbSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "ID Khách thuê", "ID Phòng", "Họ và tên", "Giới tính", "Số điện thoại", "Địa chỉ" }));
+        cbbSearchType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tất cả", "ID Khách thuê", "ID Phòng", "Họ và tên", "Giới tính", "Số điện thoại", "Địa chỉ", "Trạng thái" }));
 
         txtSearchInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -305,7 +319,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn khách thuê để xóa!");
             }
-            
+
             String tenantId = tblTenant.getValueAt(rowSelected, 2).toString();
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa khách thuê này không?",
                     "Xác nhận xóa khách thuê")) {
@@ -337,6 +351,8 @@ public class TenantForm extends javax.swing.JInternalFrame {
                 result = SearchTenant.searchByPhone(searchContent);
             case "Địa chỉ" ->
                 result = SearchTenant.searchByAddress(searchContent);
+            case "Trạng thái" ->
+                result = SearchTenant.searchByStatusContract(searchContent);
         }
         loadDataToTable(result);
     }//GEN-LAST:event_txtSearchInputKeyReleased

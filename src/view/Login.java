@@ -183,7 +183,6 @@ public class Login extends javax.swing.JFrame {
                 pswPassword.setText("");
                 throw new InvalidPasswordException("Mật khẩu không chính xác.");
             }
-            OptionPaneCustom.showSuccessDialog(this, "Đăng nhập thành công!");
             new Admin().setVisible(true);
             this.dispose();
         } catch (ObjectExistsException e) {

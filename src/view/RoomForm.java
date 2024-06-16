@@ -3,7 +3,6 @@ package view;
 import controller.manager.RoomManager;
 import controller.search.SearchRoom;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
@@ -63,7 +62,9 @@ public class RoomForm extends javax.swing.JInternalFrame {
         String[] headerTbl = new String[]{"STT", "ID", "Diện tích", "Loại phòng", "Giá thuê", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblRoom.setModel(tblModel);
+        
         tblRoom.setAutoCreateRowSorter(true);
+        
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblModel);
         sorter.setComparator(4, (String s1, String s2) -> {
             double d1 = Double.parseDouble(s1.replace(",", ""));
@@ -82,7 +83,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
 
                 tblModel.addRow(new Object[]{
                     stt++, room.getId().toUpperCase(), room.getArea(), room.getType(),
-                    FormatterUtil.formatPriceDisplay(room.getRentCost()), room.getStatus()
+                    FormatterUtil.formatPriceTable(room.getRentCost()), room.getStatus()
                 });
             }
         } catch (Exception e) {

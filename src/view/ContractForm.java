@@ -2,6 +2,10 @@ package view;
 
 import controller.manager.ContractManager;
 import controller.search.SearchContract;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -9,6 +13,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import model.Contract;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
@@ -31,11 +37,54 @@ public class ContractForm extends javax.swing.JInternalFrame {
 
     // TẠO TABLE
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0 ->
+                        Integer.class;
+                    case 5 ->
+                        Double.class;
+                    case 2, 3 ->
+                        Date.class;
+                    default ->
+                        String.class;
+                };
+            }
+        };
         String[] headerTbl = new String[]{"STT", "ID", "Ngày bắt đầu", "Ngày kết thúc", "Trạng thái", "Tiền cọc"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblContract.setModel(tblModel);
         tblContract.setAutoCreateRowSorter(true);
+
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblModel);
+
+        sorter.setComparator(2, (String s1, String s2) -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date d1 = dateFormat.parse(s1);
+                Date d2 = dateFormat.parse(s2);
+                return d1.compareTo(d2);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
+
+        sorter.setComparator(5, (String s1, String s2) -> {
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            symbols.setGroupingSeparator(',');
+            DecimalFormat currencyFormat = new DecimalFormat("#,##0", symbols);
+            try {
+                Number n1 = currencyFormat.parse(s1);
+                Number n2 = currencyFormat.parse(s2);
+                return Double.compare(n1.doubleValue(), n2.doubleValue());
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
+
+        sorter.setComparator(3, sorter.getComparator(2));
+
     }
 
     // LOAD DATA CHO TABLE
@@ -43,9 +92,10 @@ public class ContractForm extends javax.swing.JInternalFrame {
         try {
             int stt = 1;
             tblModel.setRowCount(0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             for (Contract contract : contracts) {
                 tblModel.addRow(new Object[]{
-                    stt++, contract.getId(), FormatterUtil.formatDate(contract.getStartAt()), FormatterUtil.formatDate(contract.getEndAt()),
+                    stt++, contract.getId(), dateFormat.format(contract.getStartAt()), dateFormat.format(contract.getEndAt()),
                     contract.getStatus(), FormatterUtil.formatPrice(contract.getDeposit())
                 });
             }

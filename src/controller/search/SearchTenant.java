@@ -20,7 +20,8 @@ public class SearchTenant {
                     || tenant.getIdRoom().toLowerCase().contains(text.toLowerCase())
                     || tenant.getGender().toLowerCase().contains(text.toLowerCase())
                     || tenant.getPhone().contains(text)
-                    || tenant.getAddress().toLowerCase().contains(text.toLowerCase())) {
+                    || tenant.getAddress().toLowerCase().contains(text.toLowerCase())
+                    || tenant.getContract().getStatus().toLowerCase().contains(text.toLowerCase())) {
                 result.add(tenant);
             }
         }
@@ -81,6 +82,16 @@ public class SearchTenant {
         List<Tenant> result = new ArrayList<>();
         for (Tenant tenant : tenants) {
             if (tenant.getAddress().toLowerCase().contains(text.toLowerCase())) {
+                result.add(tenant);
+            }
+        }
+        return result;
+    }
+
+    public static List<Tenant> searchByStatusContract(String text) {
+        List<Tenant> result = new ArrayList<>();
+        for (Tenant tenant : tenants) {
+            if (tenant.getContract().getStatus().toLowerCase().contains(text.toLowerCase())) {
                 result.add(tenant);
             }
         }

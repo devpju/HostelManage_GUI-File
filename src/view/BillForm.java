@@ -2,7 +2,13 @@ package view;
 
 import controller.search.SearchBill;
 import controller.manager.BillManager;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -10,6 +16,8 @@ import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import model.Bill;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
@@ -36,37 +44,59 @@ public class BillForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0, 4, 6 ->
+                        Integer.class; 
+                    case 5, 7, 8, 9, 10 ->
+                        Double.class; 
+                    case 3 ->
+                        Date.class; 
+                    default ->
+                        String.class;
+                };
+            }
+        };
+
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Ngày lập", "Số điện", "Tiền điện",
             "Số nước", "Tiền nước", "Tiền mạng", "Tiền thuê phòng", "Tổng tiền", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblBill.setModel(tblModel);
         tblBill.setAutoCreateRowSorter(true);
-    }
 
-    public final void loadDataToTable(List<Bill> bills) {
-        try {
-            int stt = 1;
-            tblModel.setRowCount(0);
-            for (Bill bill : bills) {
-                tblModel.addRow(new Object[]{
-                    stt++,
-                    bill.getIdRoom(),
-                    bill.getId(),
-                    FormatterUtil.formatDate(bill.getStartAt()),
-                    bill.getNumberElec(),
-                    FormatterUtil.formatPrice(bill.ElecCost()),
-                    bill.getNumberWater(),
-                    FormatterUtil.formatPrice(bill.WaterCost()),
-                    FormatterUtil.formatPrice(bill.getInternetCost()),
-                    FormatterUtil.formatPrice(bill.getRentCost()),
-                    FormatterUtil.formatPrice(bill.sumCost()),
-                    bill.getStatus()
-                });
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblModel);
+        sorter.setComparator(3, (String s1, String s2) -> {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                Date d1 = dateFormat.parse(s1);
+                Date d2 = dateFormat.parse(s2);
+                return d1.compareTo(d2);
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
             }
-        } catch (Exception e) {
-            OptionPaneCustom.showErrorDialog(this, e.getMessage());
-        }
+        });
+
+        sorter.setComparator(5, (String s1, String s2) -> {
+            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+            symbols.setGroupingSeparator(',');
+            DecimalFormat currencyFormat = new DecimalFormat("#,##0", symbols);
+            try {
+                Number n1 = currencyFormat.parse(s1);
+                Number n2 = currencyFormat.parse(s2);
+                return Double.compare(n1.doubleValue(), n2.doubleValue());
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        });
+
+        sorter.setComparator(7, sorter.getComparator(5));
+        sorter.setComparator(8, sorter.getComparator(5));
+        sorter.setComparator(9, sorter.getComparator(5));
+        sorter.setComparator(10, sorter.getComparator(5));
+
+        tblBill.setRowSorter(sorter);
     }
 
     private void customTable() {
@@ -89,6 +119,33 @@ public class BillForm extends javax.swing.JInternalFrame {
 
     public String getIdRoom() {
         return tblBill.getValueAt(rowSelected, 1).toString();
+    }
+
+    public final void loadDataToTable(List<Bill> bills) {
+        try {
+            int stt = 1;
+            tblModel.setRowCount(0);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+            for (Bill bill : bills) {
+                tblModel.addRow(new Object[]{
+                    stt++,
+                    bill.getIdRoom(),
+                    bill.getId(),
+                    dateFormat.format(bill.getStartAt()),
+                    bill.getNumberElec(),
+                    FormatterUtil.formatPriceTable(bill.ElecCost()),
+                    bill.getNumberWater(),
+                    FormatterUtil.formatPriceTable(bill.WaterCost()),
+                    FormatterUtil.formatPriceTable(bill.getInternetCost()),
+                    FormatterUtil.formatPriceTable(bill.getRentCost()),
+                    FormatterUtil.formatPriceTable(bill.sumCost()),
+                    bill.getStatus()
+                });
+            }
+        } catch (Exception e) {
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")

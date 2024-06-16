@@ -12,7 +12,7 @@ public class FormatterUtil {
         return String.format("%,.0f", price);
     }
 
-    public static String formatPriceDisplay(double number) {
+    public static String formatPriceTable(double number) {
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.US);
         return formatter.format(number);
     }
@@ -27,6 +27,12 @@ public class FormatterUtil {
     public static String formatDate(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         return formatter.format(date);
+    }
+
+    public static Date formatDateTable(Date date) throws ParseException {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String formattedDate = formatter.format(date);
+        return formatter.parse(formattedDate);
     }
 
     public static Date parseDate(String dateString) throws ParseException {
