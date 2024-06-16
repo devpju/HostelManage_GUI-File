@@ -49,6 +49,7 @@ public class Contract implements Serializable {
     }
 
     public String getStatus() {
+        updateStatus();
         return status;
     }
 
@@ -68,7 +69,8 @@ public class Contract implements Serializable {
     }
 
     public final void updateStatus() {
-        long daysRemaining = ChronoUnit.DAYS.between(startAt, endAt);
+        LocalDate today = LocalDate.now();
+        long daysRemaining = ChronoUnit.DAYS.between(today, endAt);
         if (daysRemaining <= 0) {
             status = "Đã hết hạn";
         } else {

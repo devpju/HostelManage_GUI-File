@@ -3,12 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/view/DetailTenant.java</file>
-            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/view/TenantForm.java</file>
-            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/view/UpdateTenant.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/controller/manager/ContractManager.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/view/Admin.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/model/Bill.java</file>
             <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/controller/manager/TenantManager.java</file>
-            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/util/FormatterUtil.java</file>
-            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/model/Tenant.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/view/Login.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/QuanLyPhongTro/Main.java</file>
+            <file>file:/C:/Users/DevPiu/Pictures/BaoCaoJava/HostelManagerProgram/src/model/Contract.java</file>
         </group>
     </open-files>
 </project-private>

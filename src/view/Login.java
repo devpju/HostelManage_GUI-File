@@ -72,7 +72,6 @@ public class Login extends javax.swing.JFrame {
         txtUsername.setBackground(new java.awt.Color(13, 39, 51));
         txtUsername.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtUsername.setForeground(new java.awt.Color(255, 255, 255));
-        txtUsername.setText("admin");
         txtUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.WHITE));
         DefaultCaret caret = (DefaultCaret) pswPassword.getCaret();
         caret.setBlinkRate(500); // Đặt tốc độ nhấp nháy của con trỏ
@@ -85,7 +84,6 @@ public class Login extends javax.swing.JFrame {
         pswPassword.setBackground(new java.awt.Color(13, 39, 51));
         pswPassword.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         pswPassword.setForeground(new java.awt.Color(255, 255, 255));
-        pswPassword.setText("Admin123");
         pswPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.WHITE));
         pswPassword.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         pswPassword.setCaretColor(Color.WHITE); // Đặt màu con trỏ nhấp nháy

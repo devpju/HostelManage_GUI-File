@@ -569,19 +569,19 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_navTenantMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-//        Object[] options = {"Có", "Hủy"};
-//        int choice = JOptionPane.showOptionDialog(this,
-//                "Bạn có chắc chắn muốn thoát không?",
-//                "Xác nhận thoát",
-//                JOptionPane.YES_NO_OPTION,
-//                JOptionPane.QUESTION_MESSAGE,
-//                null, options, options[0]);
-//
-//        if (choice == JOptionPane.NO_OPTION) {
-//            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-//        } else {
-//            setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        }
+        Object[] options = {"Có", "Hủy"};
+        int choice = JOptionPane.showOptionDialog(this,
+                "Bạn có chắc chắn muốn thoát không?",
+                "Xác nhận thoát",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null, options, options[0]);
+
+        if (choice == JOptionPane.NO_OPTION) {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        } else {
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
+        }
     }//GEN-LAST:event_formWindowClosing
 
 
