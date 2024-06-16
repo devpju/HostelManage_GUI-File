@@ -5,6 +5,7 @@ import controller.StatisticManager;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Statistic.StatisticByMonthChart;
 import model.Statistic.StatisticByMonthFilter;
@@ -24,19 +25,25 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         LocalDate currentDate = LocalDate.now();
         int month = currentDate.getMonthValue();
         int year = currentDate.getYear();
-        StatisticByMonthFilter statisticFilter = new StatisticByMonthFilter(month - 1, year);
-        txtTotalNumberElec.setText(String.valueOf(statisticFilter.getTotalNumberElec()));
-        txtTotalElecCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalElecCost()));
-        txtTotalNumberWater.setText(String.valueOf(statisticFilter.getTotalNumberWater()));
-        txtTotalWaterCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalWaterCost()));
-        txtTotalInternetCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalInternetCost()));
-        txtTotalRentCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRentCost()));
-        txtTotalRevenue.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRevenue()));
+        setStatisticFilterBill(month, year);
+
     }
 
     private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
+    }
+
+    public final void setStatisticFilterBill(int month, int year) {
+        StatisticByMonthFilter statisticFilter = new StatisticByMonthFilter(month, year);
+        txtTotalNumberElec.setText(String.valueOf(statisticFilter.getTotalNumberElec()));
+        txtTotalElecCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalElecCost()) + " VNĐ");
+        txtTotalNumberWater.setText(String.valueOf(statisticFilter.getTotalNumberWater()));
+        txtTotalWaterCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalWaterCost()) + " VNĐ");
+        txtTotalInternetCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalInternetCost()) + " VNĐ");
+        txtTotalRentCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRentCost()) + " VNĐ");
+        txtTotalRevenue.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRevenue()) + " VNĐ");
+
     }
 
     public final void setHeader() {
@@ -48,6 +55,7 @@ public class StatisticForm extends javax.swing.JInternalFrame {
     private void updateChart(int year) {
         List<StatisticByMonthChart> statistics = statisticManager.getRevenueByMonth(year);
         chart.clear();
+        chart.resetData();
         chart.addLegend("Điện", new Color(245, 189, 135));
         chart.addLegend("Nước", new Color(135, 189, 245));
         chart.addLegend("Phòng", new Color(189, 135, 245));
@@ -85,6 +93,7 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         panelContainer = new javax.swing.JPanel();
         chart = new com.raven.chart.Chart();
         jLabel5 = new javax.swing.JLabel();
+        cdateYearChart = new com.toedter.calendar.JYearChooser();
         jPanel5 = new javax.swing.JPanel();
         cdateMonth = new com.toedter.calendar.JMonthChooser();
         cdateYear = new com.toedter.calendar.JYearChooser();
@@ -100,6 +109,9 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -224,31 +236,45 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         panelContainer.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Biểu đồ thống kê doanh thu trong năm 2024");
+        jLabel5.setText("Biểu đồ thống kê doanh thu năm");
+
+        cdateYearChart.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateYearChart.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cdateYearChartPropertyChange(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
         panelContainer.setLayout(panelContainerLayout);
         panelContainerLayout.setHorizontalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelContainerLayout.createSequentialGroup()
+                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 1038, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelContainerLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addComponent(jLabel5)
-                .addGap(379, 379, 379))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cdateYearChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelContainerLayout.setVerticalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContainerLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                .addGroup(panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel5)
+                    .addComponent(cdateYearChart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(jLabel5))
+                .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
         );
 
         cdateMonth.setBackground(new java.awt.Color(255, 204, 204));
         cdateMonth.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cdateMonth.setLocale(new Locale("vi", "VN"));
 
         cdateYear.setBackground(new java.awt.Color(255, 255, 255));
+        cdateYear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         btnFilter.setBackground(new java.awt.Color(246, 246, 246));
         btnFilter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/sta-search.png"))); // NOI18N
@@ -259,62 +285,93 @@ public class StatisticForm extends javax.swing.JInternalFrame {
             }
         });
 
+        txtTotalNumberElec.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalNumberElec.setText("jTextField1");
 
+        txtTotalElecCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalElecCost.setText("jTextField2");
 
+        txtTotalNumberWater.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalNumberWater.setText("jTextField3");
 
+        txtTotalWaterCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalWaterCost.setText("jTextField4");
 
+        txtTotalInternetCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalInternetCost.setText("jTextField5");
 
+        txtTotalRentCost.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalRentCost.setText("jTextField6");
 
+        txtTotalRevenue.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         txtTotalRevenue.setText("jTextField1");
+        txtTotalRevenue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalRevenueActionPerformed(evt);
+            }
+        });
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Số điện:");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Số nước:");
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Tiền điện:");
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel11.setText("Tiền nước:");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel12.setText("Tiền mạng:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel13.setText("Tiền thuê phòng:");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel14.setText("Doanh thu:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cdateYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cdateYear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cdateMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnFilter)
-                .addGap(21, 21, 21)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTotalNumberElec)
-                    .addComponent(txtTotalNumberWater))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtTotalNumberWater, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTotalElecCost, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(txtTotalWaterCost))
-                .addGap(47, 47, 47)
+                    .addComponent(txtTotalElecCost)
+                    .addComponent(txtTotalWaterCost, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtTotalInternetCost, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
-                    .addComponent(txtTotalRentCost))
-                .addGap(78, 78, 78)
-                .addComponent(txtTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                    .addComponent(txtTotalInternetCost)
+                    .addComponent(txtTotalRentCost, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(49, 49, 49))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,48 +379,54 @@ public class StatisticForm extends javax.swing.JInternalFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtTotalNumberElec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotalElecCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTotalInternetCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel10))
+                            .addComponent(txtTotalNumberElec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)
+                            .addComponent(txtTotalElecCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(txtTotalInternetCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtTotalNumberWater, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTotalWaterCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTotalRentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel9))
-                            .addComponent(jLabel11)))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel9)
+                            .addComponent(txtTotalNumberWater, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(txtTotalWaterCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtTotalRentCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addComponent(txtTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtTotalRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel14)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cdateYear, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(13, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(cdateMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(cdateYear, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(btnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelContainer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 56, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 57, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, Short.MAX_VALUE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -388,25 +451,30 @@ public class StatisticForm extends javax.swing.JInternalFrame {
     private void btnFilterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFilterMouseClicked
         int year = cdateYear.getYear();
         int month = cdateMonth.getMonth() + 1;
-        StatisticByMonthFilter statisticFilter = new StatisticByMonthFilter(month, year);
-        txtTotalNumberElec.setText(String.valueOf(statisticFilter.getTotalNumberElec()));
-        txtTotalElecCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalElecCost()));
-        txtTotalNumberWater.setText(String.valueOf(statisticFilter.getTotalNumberWater()));
-        txtTotalWaterCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalWaterCost()));
-        txtTotalInternetCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalInternetCost()));
-        txtTotalRentCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRentCost()));
-        txtTotalRevenue.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRevenue()));
+        setStatisticFilterBill(month, year);
     }//GEN-LAST:event_btnFilterMouseClicked
+
+    private void txtTotalRevenueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalRevenueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalRevenueActionPerformed
+
+    private void cdateYearChartPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cdateYearChartPropertyChange
+        updateChart(cdateYearChart.getYear());
+    }//GEN-LAST:event_cdateYearChartPropertyChange
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilter;
     private com.toedter.calendar.JMonthChooser cdateMonth;
     private com.toedter.calendar.JYearChooser cdateYear;
+    private com.toedter.calendar.JYearChooser cdateYearChart;
     private com.raven.chart.Chart chart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

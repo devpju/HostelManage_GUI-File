@@ -35,10 +35,10 @@ public class StatisticByMonthFilter {
                 totalElecCost += bill.ElecCost();
                 totalWaterCost += bill.WaterCost();
                 totalInternetCost += bill.getInternetCost();
+                totalRentCost += bill.getRentCost();
                 totalRevenue += bill.sumCost();
             }
         }
-        totalRentCost = totalRevenue - totalWaterCost - totalInternetCost - totalElecCost;
     }
 
     // Getters for statistics

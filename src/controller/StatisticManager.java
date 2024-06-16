@@ -56,7 +56,7 @@ public class StatisticManager {
                     if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
                         totalElectricityCost += bill.ElecCost();
                         totalWaterCost += bill.WaterCost();
-                        totalRoomRevenue += (bill.sumCost() - bill.ElecCost() - bill.WaterCost());
+                        totalRoomRevenue += bill.getRentCost();
                         totalRevenue += bill.sumCost();
                     }
                 }

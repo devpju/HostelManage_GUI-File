@@ -71,6 +71,14 @@ public class Chart extends javax.swing.JPanel {
         }
     }
 
+    public void resetData() {
+        legends.clear(); // Xóa hết dữ liệu trong legends
+        model.clear();   // Xóa hết dữ liệu trong model
+        panelLegend.removeAll(); // Xóa hết các thành phần hiển thị trong panelLegend
+        panelLegend.repaint(); // Cập nhật lại giao diện
+        panelLegend.revalidate(); // Cập nhật lại giao diện
+    }
+
     public void clear() {
         animate = 0;
         blankPlotChart.setLabelCount(0);
