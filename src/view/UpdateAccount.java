@@ -220,8 +220,7 @@ public class UpdateAccount extends javax.swing.JFrame {
 
                 accountManager.updateAccountInfo(accountForm.getRowSelected(), updatedAccount);
 
-                Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                        Notifications.Location.TOP_CENTER, "Sửa thông tin tài khoản thành công!");
+                OptionPaneCustom.showSuccessDialog(this, "Sửa thông tin tài khoản " + username + " thành công!");
 
                 accountForm.loadDataToTable(AccountDAO.readAccounts());
                 this.dispose();

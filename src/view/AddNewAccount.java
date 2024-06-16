@@ -9,7 +9,6 @@ import exception.InvalidPasswordException;
 import exception.InvalidPhoneNumberException;
 import exception.InvalidUsernameException;
 import exception.ObjectExistsException;
-import raven.toast.Notifications;
 import view.component.OptionPaneCustom;
 
 public class AddNewAccount extends javax.swing.JFrame {
@@ -21,11 +20,6 @@ public class AddNewAccount extends javax.swing.JFrame {
         accountForm = (AccountForm) parent;
         accountManager = AccountManager.getInstance();
         initComponents();
-        initToast();
-    }
-
-    public final void initToast() {
-        Notifications.getInstance().setJFrame(this);
     }
 
     @SuppressWarnings("unchecked")
@@ -191,8 +185,7 @@ public class AddNewAccount extends javax.swing.JFrame {
             Account newAccount = accountManager.createNewAccount(username, password, name, phone, role);
             accountManager.addNewAccount(newAccount);
 
-            Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                    Notifications.Location.TOP_CENTER, "Thêm tài khoản thành công!");
+            OptionPaneCustom.showSuccessDialog(this, "Thêm tài khoản " + username + " thành công!");
 
             txtUsername.setText("");
             pswPass.setText("");

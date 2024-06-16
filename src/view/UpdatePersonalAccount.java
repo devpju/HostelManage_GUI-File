@@ -12,11 +12,11 @@ import view.component.OptionPaneCustom;
 import util.RegexValidator;
 
 public class UpdatePersonalAccount extends javax.swing.JFrame {
-
+    
     private Admin admin;
     private AccountManager accountManager;
     private Account currentAccount;
-
+    
     public UpdatePersonalAccount(javax.swing.JFrame parent) {
         admin = (Admin) parent;
         accountManager = AccountManager.getInstance();
@@ -24,17 +24,17 @@ public class UpdatePersonalAccount extends javax.swing.JFrame {
         initFields();
         initToast();
     }
-
+    
     private void initFields() {
         currentAccount = accountManager.getCurrentAccount();
         txtName.setText(currentAccount.getName());
         txtPhone.setText(currentAccount.getPhone());
     }
-
+    
     public final void initToast() {
         Notifications.getInstance().setJFrame(this);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -275,29 +275,28 @@ public class UpdatePersonalAccount extends javax.swing.JFrame {
             String name = txtName.getText().trim();
             String phone = txtPhone.getText().trim();
             String pass = new String(pswConfirmPass.getPassword());
-
+            
             if (name.isEmpty() || phone.isEmpty()) {
                 throw new EmptyInputException("Vui lòng nhập đầy đủ thông tin");
             }
-
+            
             if (!RegexValidator.isValidName(name)) {
                 throw new InvalidNameException("Họ và tên không hợp lệ.");
             }
             if (!RegexValidator.isValidPhoneNumber(phone)) {
                 throw new InvalidPhoneNumberException("Số điện thoại không hợp lệ.");
             }
-
+            
             if (!pass.equals(currentAccount.getPassword())) {
                 throw new InvalidPasswordException("Sai mật khẩu! Không thể thay đổi thông tin!");
             }
-
+            
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin tài khoản hiện tại không?",
                     "Xác nhận thay đổi thông tin tài khoản")) {
                 accountManager.updatePersonalAccountInfo(name, phone);
                 admin.autoSetHeader();
-                Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                        "Bạn đã đổi thông tin tài khoản thành công!");
+                OptionPaneCustom.showSuccessDialog(this, "Bạn đã đổi thông tin tài khoản thành công!");
             }
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
@@ -331,33 +330,32 @@ public class UpdatePersonalAccount extends javax.swing.JFrame {
             String newPass = new String(pswNewPass.getPassword());
             String confirmNewPass = new String(pswConfirmNewPass.getPassword());
             String currentPass = new String(pswCurrentPass.getPassword());
-
+            
             if (newPass.isEmpty() || confirmNewPass.isEmpty() || currentPass.isEmpty()) {
                 throw new EmptyInputException("Vui lòng nhập đầy đủ thông tin.");
             }
-
+            
             if (!currentPass.equals(currentAccount.getPassword())) {
-                pswConfirmPass.setText("");
+                pswCurrentPass.setText("");
                 throw new InvalidPasswordException("Sai mật khẩu! Không thể thay đổi thông tin.");
             }
-
+            
             if (newPass.equals(currentPass)) {
                 pswNewPass.setText("");
                 pswConfirmNewPass.setText("");
-                throw new InvalidPasswordException("Mật khẩu mới không được giống mật khẩu hiện tạ.");
+                throw new InvalidPasswordException("Mật khẩu mới không được giống mật khẩu hiện tại.");
             }
-
+            
             if (!newPass.equals(confirmNewPass)) {
                 pswNewPass.setText("");
                 pswConfirmNewPass.setText("");
                 throw new InvalidPasswordException("Mật khẩu xác nhận không trùng khớp.");
             }
-
+            
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi mật khẩu không?",
                     "Xác nhận thay đổi mật khẩu")) {
-                Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                        "Bạn đã đổi mật khẩu thành công!");
+                OptionPaneCustom.showSuccessDialog(this, "Bạn đã đổi mật khẩu thành công!");
                 accountManager.updatePersonalAccountPassword(newPass);
                 pswCurrentPass.setText("");
                 pswNewPass.setText("");
