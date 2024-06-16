@@ -6,19 +6,20 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import model.Contract;
 import util.DateConverter;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class CancleContract extends javax.swing.JFrame {
-    
+
     private final Contract contractSelected;
     ContractForm contractForm;
-    
+
     public CancleContract(javax.swing.JInternalFrame parent, Contract contractSelected) {
         contractForm = (ContractForm) parent;
         this.contractSelected = contractSelected;
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -120,22 +121,18 @@ public class CancleContract extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnNotiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotiMouseClicked
-        
+
         Date dateEnd = cdate.getDate();
+
         LocalDate convertedDateEnd = DateConverter.toLocalDate(dateEnd);
-        
-        long compareDate = ChronoUnit.DAYS.between(contractSelected.getEndAt(), convertedDateEnd);
-        String status;
-        if (compareDate <= 0) {
-            status = "Đã hết hạn";
-        } else {
-            status = "Còn " + compareDate + " ngày";
-        }
-        if (compareDate > 0) {
+
+        String status = "Hủy HĐ: " + FormatterUtil.localDateToStr(convertedDateEnd);
+
+        if (convertedDateEnd.compareTo(contractSelected.getEndAt()) > 0) {
             OptionPaneCustom.showErrorDialog(this, "Ngày báo hủy không thể lớn hơn ngày kết thúc hợp đồng.");
             return;
         }
-        
+
         if (OptionPaneCustom.showOptionDialog(this, "Bạn có muốn lưu lại thay đổi không?", "Xác nhận hủy hợp đồng")) {
             ContractManager.getInstance().cancleContract(contractSelected.getId(), status);
             contractForm.loadDataToTable(ContractManager.getInstance().getContracts());

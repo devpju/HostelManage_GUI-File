@@ -3,6 +3,7 @@ package view;
 import controller.manager.ContractManager;
 import controller.search.SearchContract;
 import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -16,6 +17,10 @@ import util.DateConverter;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import util.comparator_table.DoubleComparator;
+import util.comparator_table.LocalDateComparator;
+import util.comparator_table.StatusContractComparator;
 
 public class ContractForm extends javax.swing.JInternalFrame {
 
@@ -30,15 +35,42 @@ public class ContractForm extends javax.swing.JInternalFrame {
         customUI();
         initTable();
         customTable();
+        setupTableSorter();
         loadDataToTable(contractManager.getContracts());
     }
 
     // TẠO TABLE
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) {
+                    return Integer.class;
+                } else if (columnIndex >= 2 && columnIndex <= 3) {
+                    return LocalDate.class;
+                } else if (columnIndex == 5) {
+                    return Double.class;
+                } else {
+                    return String.class;
+                }
+            }
+        };
         String[] headerTbl = new String[]{"STT", "ID", "Ngày bắt đầu", "Ngày kết thúc", "Trạng thái", "Tiền cọc"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblContract.setModel(tblModel);
+    }
+
+    private void setupTableSorter() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tblModel);
+        tblContract.setRowSorter(sorter);
+
+        Comparator<String> doubleComparator = new DoubleComparator();
+        Comparator<String> localDateComparator = new LocalDateComparator();
+        Comparator<String> statusContractComparator = new StatusContractComparator();
+        sorter.setComparator(5, doubleComparator);
+        sorter.setComparator(2, localDateComparator);
+        sorter.setComparator(3, localDateComparator);
+        sorter.setComparator(4, statusContractComparator);
     }
 
     public final void loadDataToTable(List<Contract> contracts) {
@@ -48,8 +80,8 @@ public class ContractForm extends javax.swing.JInternalFrame {
             for (Contract contract : contracts) {
                 tblModel.addRow(new Object[]{
                     stt++, contract.getId(),
-                    FormatterUtil.formatLocalDate(contract.getStartAt()),
-                    FormatterUtil.formatLocalDate(contract.getEndAt()),
+                    FormatterUtil.localDateToStr(contract.getStartAt()),
+                    FormatterUtil.localDateToStr(contract.getEndAt()),
                     contract.getStatus(),
                     FormatterUtil.formatPrice(contract.getDeposit())
                 });

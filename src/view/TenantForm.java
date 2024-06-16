@@ -3,7 +3,8 @@ package view;
 import controller.search.SearchTenant;
 import controller.manager.TenantManager;
 import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -13,8 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import model.Tenant;
-import util.DateConverter;
 import util.FormatterUtil;
+import util.comparator_table.LocalDateComparator;
+import util.comparator_table.StatusContractComparator;
 import view.component.OptionPaneCustom;
 
 public class TenantForm extends javax.swing.JInternalFrame {
@@ -31,6 +33,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
         loadDataToTable(tenantManager.getTenants());
         customTable();
         customUI();
+        setupTableSorter();
     }
 
     private void customUI() {
@@ -39,10 +42,32 @@ public class TenantForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return switch (columnIndex) {
+                    case 0 ->
+                        Integer.class;
+                    case 5 ->
+                        LocalDate.class;
+                    default ->
+                        String.class;
+                };
+            }
+        };
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ", "Thời hạn hợp đồng"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblTenant.setModel(tblModel);
+    }
+
+    private void setupTableSorter() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tblModel);
+        tblTenant.setRowSorter(sorter);
+
+        Comparator<String> localDateComparator = new LocalDateComparator();
+         Comparator<String> statusContractComparator = new StatusContractComparator();
+        sorter.setComparator(5, localDateComparator);
+        sorter.setComparator(8, statusContractComparator);
     }
 
     public final void loadDataToTable(List<Tenant> tenants) {

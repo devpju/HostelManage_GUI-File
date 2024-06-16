@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -17,11 +18,12 @@ import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.Bill;
+import util.comparator_table.DoubleComparator;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
+import util.comparator_table.LocalDateComparator;
 
 public class BillForm extends javax.swing.JInternalFrame {
 
@@ -37,6 +39,7 @@ public class BillForm extends javax.swing.JInternalFrame {
         loadDataToTable(billManager.getBills());
         customTable();
         customUI();
+        setupTableSorter();
     }
 
     private void customUI() {
@@ -45,13 +48,37 @@ public class BillForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel();
+        tblModel = new DefaultTableModel() {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 0) {
+                    return Integer.class; // Kiểu số cho cột STT
+                } else if (columnIndex >= 4 && columnIndex <= 10) {
+                    return Double.class; // Kiểu số thập phân cho các cột tiền và số điện, nước, mạng
+                } else {
+                    return String.class; // Các cột còn lại có kiểu chuỗi
+                }
+            }
+        };
 
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Ngày lập", "Số điện", "Tiền điện",
             "Số nước", "Tiền nước", "Tiền mạng", "Tiền thuê phòng", "Tổng tiền", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblBill.setModel(tblModel);
+    }
 
+    private void setupTableSorter() {
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tblModel);
+        tblBill.setRowSorter(sorter);
+
+        Comparator<String> doubleComparator = new DoubleComparator();
+        Comparator<String> localDateComparator = new LocalDateComparator();
+        sorter.setComparator(5, doubleComparator); // Cột Tiền điện
+        sorter.setComparator(7, doubleComparator); // Cột Tiền nước
+        sorter.setComparator(8, doubleComparator); // Cột Tiền mạng
+        sorter.setComparator(9, doubleComparator); // Cột Tiền thuê phòng
+        sorter.setComparator(10, doubleComparator); // Cột Tổng tiền
+        sorter.setComparator(3, localDateComparator); // Cột Ngày lập hóa đơn
     }
 
     private void customTable() {
@@ -85,14 +112,14 @@ public class BillForm extends javax.swing.JInternalFrame {
                     stt++,
                     bill.getIdRoom(),
                     bill.getId(),
-                    FormatterUtil.formatLocalDate(bill.getStartAt()),
+                    FormatterUtil.localDateToStr(bill.getStartAt()),
                     bill.getNumberElec(),
-                    FormatterUtil.formatPriceTable(bill.ElecCost()),
+                    FormatterUtil.formatPrice(bill.ElecCost()),
                     bill.getNumberWater(),
-                    FormatterUtil.formatPriceTable(bill.WaterCost()),
-                    FormatterUtil.formatPriceTable(bill.getInternetCost()),
-                    FormatterUtil.formatPriceTable(bill.getRentCost()),
-                    FormatterUtil.formatPriceTable(bill.sumCost()),
+                    FormatterUtil.formatPrice(bill.WaterCost()),
+                    FormatterUtil.formatPrice(bill.getInternetCost()),
+                    FormatterUtil.formatPrice(bill.getRentCost()),
+                    FormatterUtil.formatPrice(bill.sumCost()),
                     bill.getStatus()
                 });
             }
