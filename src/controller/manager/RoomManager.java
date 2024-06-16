@@ -1,5 +1,6 @@
-package controller;
+package controller.manager;
 
+import controller.dao.HostelDAO;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.util.ArrayList;

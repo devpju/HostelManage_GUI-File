@@ -1,7 +1,7 @@
 package view;
 
-import controller.RoomManager;
-import controller.SearchRoom;
+import controller.manager.RoomManager;
+import controller.search.SearchRoom;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -86,7 +86,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
                 });
             }
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
 

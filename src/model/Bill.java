@@ -1,6 +1,6 @@
 package model;
 
-import controller.HostelManager;
+import controller.manager.HostelManager;
 import exception.InvalidNumberException;
 import java.io.Serializable;
 import java.util.Date;

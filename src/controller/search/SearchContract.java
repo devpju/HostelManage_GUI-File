@@ -1,5 +1,6 @@
-package controller;
+package controller.search;
 
+import controller.manager.ContractManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class SearchContract {
                     }
                 }
                 case "Đã báo hủy" -> {
-                    System.out.println("2139-0-091");
                     if (contract.getStatus().startsWith("Hủy HĐ")) {
                         result.add(contract);
                     }

@@ -1,5 +1,6 @@
-package controller;
+package controller.manager;
 
+import controller.dao.HostelDAO;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.util.ArrayList;
@@ -74,7 +75,6 @@ public class ContractManager {
     }
 
     public void cancleContract(String contractId, String newStatus) {
-                System.out.println("1092382039480239840293");
 
         for (Room room : rooms) {
             List<Tenant> tenants = room.getTenants();
@@ -82,7 +82,6 @@ public class ContractManager {
                 if (contractId.equals(tenant.getContract().getId())) {
                     tenant.getContract().setStatus(newStatus);
                     HostelDAO.updateHostel();
-                    System.out.println("02903840912=");
                     return;
                 }
             }
@@ -90,7 +89,6 @@ public class ContractManager {
     }
 
     public void cancleCancleContract(String contractId) {
-        System.out.println("1092382039480239840293");
         for (Room room : rooms) {
             List<Tenant> tenants = room.getTenants();
             for (Tenant tenant : tenants) {

@@ -1,6 +1,6 @@
 package model.Statistic;
 
-import controller.BillManager;
+import controller.manager.BillManager;
 import java.util.Calendar;
 import java.util.List;
 import model.Bill;

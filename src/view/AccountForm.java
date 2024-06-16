@@ -1,8 +1,8 @@
 package view;
 
-import controller.AccountDAO;
-import controller.AccountManager;
-import controller.SearchAccount;
+import controller.dao.AccountDAO;
+import controller.manager.AccountManager;
+import controller.search.SearchAccount;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -311,6 +311,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
                     "Bạn có đồng ý xóa tài khoản này không?", "Xác nhận xóa tài khoản")) {
                 accountManager.removeAccount(rowSelected);
                 loadDataToTable(AccountDAO.readAccounts());
+                OptionPaneCustom.showSuccessDialog(this, "Xóa thành công!");
             }
 
         } catch (Exception e) {

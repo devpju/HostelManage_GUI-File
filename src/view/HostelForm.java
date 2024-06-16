@@ -1,6 +1,6 @@
 package view;
 
-import controller.HostelManager;
+import controller.manager.HostelManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import exception.InvalidPhoneNumberException;
@@ -10,21 +10,21 @@ import view.component.OptionPaneCustom;
 import util.FormatterUtil;
 
 public final class HostelForm extends javax.swing.JInternalFrame {
-    
+
     private HostelManager hostelManager;
-    
+
     public HostelForm() {
         hostelManager = HostelManager.getInstance();
         initComponents();
         customUI();
         setInfoHostel(hostelManager.getHostel());
     }
-    
+
     private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
-    
+
     public void setInfoHostel(Hostel hostel) {
         headingNameHostel.setText(("NHÀ TRỌ " + hostel.getName()).toUpperCase());
         txtNameHostel.setText(hostel.getName());
@@ -34,7 +34,7 @@ public final class HostelForm extends javax.swing.JInternalFrame {
         txtWaterUnit.setText(FormatterUtil.formatPrice(hostel.getWaterUnitPrice()));
         txtInternetCost.setText(FormatterUtil.formatPrice(hostel.getInternetCost()));
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -240,13 +240,14 @@ public final class HostelForm extends javax.swing.JInternalFrame {
             String internetCostStr = txtInternetCost.getText();
             Hostel updatedHostel = HostelManager.getInstance().createNewHostel(hostelManager.getHostel().getId(),
                     name, address, phone, elecUnitPriceStr, waterUnitPriceStr, internetCostStr);
-            
+
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin nhà trọ không?",
                     "Xác nhận thay đổi thông tin nhà trọ")) {
-                
+
                 HostelManager.getInstance().updateHostel(updatedHostel);
                 setInfoHostel(updatedHostel);
+                OptionPaneCustom.showSuccessDialog(this, "Sửa thông tin nhà trọ thành công!");
             }
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());

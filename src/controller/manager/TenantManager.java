@@ -1,5 +1,6 @@
-package controller;
+package controller.manager;
 
+import controller.dao.HostelDAO;
 import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidNumberException;
@@ -87,7 +88,6 @@ public class TenantManager {
         for (Room room : rooms) {
             if (room.equals(selectedRoom)) {
                 room.getTenants().add(newTenant);
-                System.out.println(newTenant);
                 HostelDAO.updateHostel();
                 return;
             }

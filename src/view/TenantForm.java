@@ -1,7 +1,7 @@
 package view;
 
-import controller.SearchTenant;
-import controller.TenantManager;
+import controller.search.SearchTenant;
+import controller.manager.TenantManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,12 +15,12 @@ import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class TenantForm extends javax.swing.JInternalFrame {
-
+    
     private DefaultTableModel tblModel;
     private int rowSelected = -1;
     private Tenant tenantSelected;
     private TenantManager tenantManager;
-
+    
     public TenantForm() {
         tenantManager = TenantManager.getInstance();
         initComponents();
@@ -29,12 +29,12 @@ public class TenantForm extends javax.swing.JInternalFrame {
         customTable();
         customUI();
     }
-
+    
     private void customUI() {
         BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
-
+    
     public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ", "Thời hạn hợp đồng"};
@@ -42,13 +42,12 @@ public class TenantForm extends javax.swing.JInternalFrame {
         tblTenant.setModel(tblModel);
         tblTenant.setAutoCreateRowSorter(true);
     }
-
+    
     public final void loadDataToTable(List<Tenant> tenants) {
         try {
             int stt = 1;
             tblModel.setRowCount(0);
             for (Tenant tenant : tenants) {
-                System.out.println("--------------" + tenant);
                 tblModel.addRow(new Object[]{
                     stt++,
                     tenant.getIdRoom(),
@@ -61,16 +60,15 @@ public class TenantForm extends javax.swing.JInternalFrame {
                     tenant.getContract().getStatus()
                 });
             }
-            System.out.println("Làm mới bảng tenants thành công!");
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
-
+    
     private void customTable() {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-
+        
         DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
         leftRenderer.setHorizontalAlignment(DefaultTableCellRenderer.LEFT);
         for (int i = 0; i < tblTenant.getColumnCount(); i++) {
@@ -91,11 +89,11 @@ public class TenantForm extends javax.swing.JInternalFrame {
         tcm.getColumn(2).setMinWidth(100);
         tcm.getColumn(4).setMaxWidth(100);
     }
-
+    
     public String getIdRoom() {
         return tblTenant.getValueAt(rowSelected, 1).toString();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -295,7 +293,6 @@ public class TenantForm extends javax.swing.JInternalFrame {
                 throw new Exception("Vui lòng chọn khách thuê để sửa!");
             }
             tenantSelected = tenantManager.getTenants().get(rowSelected);
-            System.out.println("quy7iw9823984" +tenantSelected);
             new UpdateTenant(this, tenantSelected).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -308,12 +305,13 @@ public class TenantForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn khách thuê để xóa!");
             }
-
+            
             String tenantId = tblTenant.getValueAt(rowSelected, 2).toString();
             if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa khách thuê này không?",
                     "Xác nhận xóa khách thuê")) {
                 TenantManager.getInstance().removeTenantById(tenantId);
                 loadDataToTable(TenantManager.getInstance().getTenants());
+                OptionPaneCustom.showSuccessDialog(this, "Xóa khách thuê thành công!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -359,7 +357,6 @@ public class TenantForm extends javax.swing.JInternalFrame {
             if (rowSelected == -1) {
                 throw new Exception("Vui lòng chọn khách thuê để xem chi tiết!");
             }
-            System.out.println(tenantManager.getTenants().get(rowSelected));
             tenantSelected = tenantManager.getTenants().get(rowSelected);
             new DetailTenant(tenantSelected).setVisible(true);
         } catch (Exception e) {

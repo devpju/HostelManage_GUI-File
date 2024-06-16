@@ -1,5 +1,6 @@
-package controller;
+package controller.dao;
 
+import controller.manager.HostelManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;

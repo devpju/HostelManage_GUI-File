@@ -1,5 +1,6 @@
-package controller;
+package controller.search;
 
+import controller.manager.AccountManager;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;

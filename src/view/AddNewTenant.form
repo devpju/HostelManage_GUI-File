@@ -232,9 +232,9 @@
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                  <Component id="btnAddT" min="-2" pref="238" max="-2" attributes="0"/>
+                  <Component id="btnAddT" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-                  <Component id="btnClose" min="-2" pref="158" max="-2" attributes="0"/>
+                  <Component id="btnClose" min="-2" pref="200" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -386,6 +386,9 @@
                 </Property>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cdateDobT.setLocale(new Locale(&quot;vi&quot;, &quot;VN&quot;));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="txtNameT">
               <Properties>
@@ -535,6 +538,9 @@
                 </Property>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cdateStartC.setLocale(new Locale(&quot;vi&quot;, &quot;VN&quot;));"/>
+              </AuxValues>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="cdateEndC">
               <Properties>
@@ -543,6 +549,9 @@
                 </Property>
                 <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="cdateEndC.setLocale(new Locale(&quot;vi&quot;, &quot;VN&quot;));"/>
+              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>

@@ -1,7 +1,7 @@
 package view;
 
-import controller.SearchBill;
-import controller.BillManager;
+import controller.search.SearchBill;
+import controller.manager.BillManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -49,7 +49,6 @@ public class BillForm extends javax.swing.JInternalFrame {
             int stt = 1;
             tblModel.setRowCount(0);
             for (Bill bill : bills) {
-                System.out.println(bill);
                 tblModel.addRow(new Object[]{
                     stt++,
                     bill.getIdRoom(),
@@ -65,9 +64,8 @@ public class BillForm extends javax.swing.JInternalFrame {
                     bill.getStatus()
                 });
             }
-            System.out.println("Làm mới bảng bills thành công!");
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
 
@@ -322,10 +320,9 @@ public class BillForm extends javax.swing.JInternalFrame {
         rowSelected = tblBill.getSelectedRow();
         try {
             if (rowSelected == -1) {
-                throw new Exception("Vui lòng chọn khách thuê để sửa!");
+                throw new Exception("Vui lòng chọn hóa đơn để sửa!");
             }
             billSelected = billManager.getBills().get(rowSelected);
-            System.out.println(billSelected);
             new UpdateBill(this, billSelected).setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -336,14 +333,15 @@ public class BillForm extends javax.swing.JInternalFrame {
         rowSelected = tblBill.getSelectedRow();
         try {
             if (rowSelected == -1) {
-                throw new Exception("Vui lòng chọn khách thuê để xóa!");
+                throw new Exception("Vui lòng chọn hóa đơn để xóa!");
             }
 
             String billId = tblBill.getValueAt(rowSelected, 2).toString();
-            if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa khách thuê này không?",
-                    "Xác nhận xóa khách thuê")) {
+            if (OptionPaneCustom.showOptionDialog(this, "Bạn có đồng ý xóa hóa đơn này không?",
+                    "Xác nhận xóa hóa đơn")) {
                 BillManager.getInstance().removeBillById(billId);
                 loadDataToTable(BillManager.getInstance().getBills());
+                OptionPaneCustom.showSuccessDialog(this, "Xóa hóa đơn thành công!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

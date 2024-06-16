@@ -1,18 +1,18 @@
 package view;
 
-import controller.RoomManager;
-import controller.SearchRoom;
-import controller.BillManager;
-import controller.HostelManager;
+import controller.manager.RoomManager;
+import controller.search.SearchRoom;
+import controller.manager.BillManager;
+import controller.manager.HostelManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import model.Room;
 import model.Bill;
-import raven.toast.Notifications;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
@@ -57,9 +57,8 @@ public class AddNewBill extends javax.swing.JFrame {
                     stt++, room.getId().toUpperCase(), room.getStatus()
                 });
             }
-            System.out.println("Làm mới bảng rooms thành công!");
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
 
@@ -211,14 +210,10 @@ public class AddNewBill extends javax.swing.JFrame {
 
         txtIdBill.setEditable(false);
         txtIdBill.setToolTipText("");
-        txtIdBill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdBillActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("ID:");
 
+        cdateStartAt.setLocale(new Locale("vi", "VN"));
         cdateStartAt.setDateFormatString("dd/MM/yyyy");
 
         txtInterCost.setEditable(false);
@@ -240,11 +235,6 @@ public class AddNewBill extends javax.swing.JFrame {
             }
         });
 
-        txtNumberElec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumberElecActionPerformed(evt);
-            }
-        });
         txtNumberElec.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtNumberElecKeyReleased(evt);
@@ -260,11 +250,6 @@ public class AddNewBill extends javax.swing.JFrame {
         txtElecCost.setEditable(false);
 
         txtWaterCost.setEditable(false);
-        txtWaterCost.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtWaterCostActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Ngày lập:");
 
@@ -481,8 +466,7 @@ public class AddNewBill extends javax.swing.JFrame {
 
             BillManager.getInstance().addNewBill(roomSelected, newBill);
 
-            Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                    Notifications.Location.TOP_CENTER, "Thêm hóa đơn mới thành công!");
+            OptionPaneCustom.showSuccessDialog(this, "Thêm hóa đơn thành công!");
 
             billHome.loadDataToTable(BillManager.getInstance().getBills());
             txtIdBill.setText("");
@@ -502,18 +486,6 @@ public class AddNewBill extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnAddTMouseClicked
-
-    private void txtNumberElecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumberElecActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumberElecActionPerformed
-
-    private void txtIdBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdBillActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdBillActionPerformed
-
-    private void txtWaterCostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtWaterCostActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtWaterCostActionPerformed
 
     private void txtNumberElecKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNumberElecKeyReleased
         try {

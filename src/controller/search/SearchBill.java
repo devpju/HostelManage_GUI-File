@@ -1,5 +1,6 @@
-package controller;
+package controller.search;
 
+import controller.manager.BillManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;

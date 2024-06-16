@@ -1,7 +1,7 @@
 package view;
 
-import controller.ContractManager;
-import controller.SearchContract;
+import controller.manager.ContractManager;
+import controller.search.SearchContract;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -396,6 +396,7 @@ public class ContractForm extends javax.swing.JInternalFrame {
                 contractSelected = contractManager.getContracts().get(rowSelected);
                 ContractManager.getInstance().cancleCancleContract(contractSelected.getId());
                 loadDataToTable(ContractManager.getInstance().getContracts());
+                OptionPaneCustom.showSuccessDialog(this, "Bạn đã hủy báo hủy hợp đồng thành công!");
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

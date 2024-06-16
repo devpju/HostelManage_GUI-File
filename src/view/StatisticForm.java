@@ -1,7 +1,7 @@
 package view;
 
 import com.raven.chart.ModelChart;
-import controller.StatisticManager;
+import controller.manager.StatisticManager;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.util.List;

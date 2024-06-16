@@ -1,6 +1,6 @@
 package view;
 
-import controller.RoomManager;
+import controller.manager.RoomManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import model.Room;

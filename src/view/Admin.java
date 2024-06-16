@@ -1,6 +1,6 @@
 package view;
 
-import controller.AccountManager;
+import controller.manager.AccountManager;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;

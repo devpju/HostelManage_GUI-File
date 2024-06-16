@@ -1,7 +1,7 @@
 package view;
 
-import controller.ContractManager;
-import controller.TenantManager;
+import controller.manager.ContractManager;
+import controller.manager.TenantManager;
 import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidNumberException;
@@ -9,24 +9,23 @@ import exception.InvalidPhoneNumberException;
 import java.awt.HeadlessException;
 import java.util.Calendar;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import model.Contract;
 import model.Tenant;
 import view.component.OptionPaneCustom;
 
 public class UpdateTenant extends javax.swing.JFrame {
-
+    
     private final Tenant tenantSelected;
     TenantForm tenantForm;
-
+    
     public UpdateTenant(javax.swing.JInternalFrame parent, Tenant tenantSelected) {
         tenantForm = (TenantForm) parent;
         this.tenantSelected = tenantSelected;
         initComponents();
         setInfoTenant();
-
+        
     }
-
+    
     final void setInfoTenant() {
         txtIdT.setText(tenantSelected.getId());
         txtIdC.setText(tenantSelected.getContract().getId());
@@ -38,7 +37,7 @@ public class UpdateTenant extends javax.swing.JFrame {
         cdateEndC.setDate(tenantSelected.getContract().getEndAt());
         cdateDobT.setDate(tenantSelected.getDob());
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -263,9 +262,9 @@ public class UpdateTenant extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(btnUpdateTenant, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUpdateTenant, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
@@ -295,7 +294,7 @@ public class UpdateTenant extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(111, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(111, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,10 +349,10 @@ public class UpdateTenant extends javax.swing.JFrame {
                     "Bạn có đồng ý thay đổi thông tin khách thuê không?", "Xác nhận thay đổi thông tin khách thuê")) {
                 TenantManager.getInstance().updateTenantById(newTenantId, updatedTenant);
                 tenantForm.loadDataToTable(TenantManager.getInstance().getTenants());
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                OptionPaneCustom.showSuccessDialog(this, "Sửa thông tin khách thuê thành công!");
                 this.dispose();
             }
-
+            
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (InvalidNumberException e) {

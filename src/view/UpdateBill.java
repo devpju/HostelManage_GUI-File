@@ -1,12 +1,11 @@
 package view;
 
-import controller.HostelManager;
-import controller.BillManager;
+import controller.manager.HostelManager;
+import controller.manager.BillManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.awt.HeadlessException;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import model.Bill;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
@@ -25,10 +24,8 @@ public class UpdateBill extends javax.swing.JFrame {
     }
 
     final void setInfoBill() {
-        System.out.println(billSelected);
         txtIdBill.setText(billSelected.getId());
         cdateStartAt.setDate(billSelected.getStartAt());
-        System.out.println(String.valueOf(billSelected.getNumberElec()));
         txtNumberElec.setText(String.valueOf(billSelected.getNumberElec()));
         txtNumberWater.setText(String.valueOf(billSelected.getNumberWater()));
         txtInterCost.setText(String.valueOf(billSelected.getInternetCost()));
@@ -296,11 +293,10 @@ public class UpdateBill extends javax.swing.JFrame {
             Bill updatedBill = BillManager.getInstance().createNewBill(id, billForm.getIdRoom(),
                     startAt, numberElecStr, numberWaterStr, rentCostStr, status);
             if (OptionPaneCustom.showOptionDialog(this,
-                    "Bạn có đồng ý thay đổi thông tin khách thuê không?", "Xác nhận thay đổi thông tin khách thuê")) {
+                    "Bạn có đồng ý thay đổi thông tin hóa đơn này không?", "Xác nhận thay đổi thông tin hóa đơn")) {
                 BillManager.getInstance().updateBillById(id, updatedBill);
-                System.out.println(updatedBill);
                 billForm.loadDataToTable(BillManager.getInstance().getBills());
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                OptionPaneCustom.showSuccessDialog(this, "Sửa thông tin hóa đơn thành công!");
                 this.dispose();
             }
 

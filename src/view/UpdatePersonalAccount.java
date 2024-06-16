@@ -1,6 +1,6 @@
 package view;
 
-import controller.AccountManager;
+import controller.manager.AccountManager;
 import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidPasswordException;

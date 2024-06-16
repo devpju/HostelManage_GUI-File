@@ -1,22 +1,22 @@
 package view;
 
-import controller.ContractManager;
+import controller.manager.ContractManager;
 import java.util.Date;
 import model.Contract;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class CancleContract extends javax.swing.JFrame {
-
+    
     private final Contract contractSelected;
     ContractForm contractForm;
-
+    
     public CancleContract(javax.swing.JInternalFrame parent, Contract contractSelected) {
         contractForm = (ContractForm) parent;
         this.contractSelected = contractSelected;
         initComponents();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -118,20 +118,20 @@ public class CancleContract extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void btnNotiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotiMouseClicked
-        System.out.println(cdate.getDate());
-
+        
         Date dateEnd = cdate.getDate();
         String status = "Hủy HĐ: " + FormatterUtil.formatDate(dateEnd);
-
+        
         int compareDate = dateEnd.compareTo(contractSelected.getEndAt());
         if (compareDate > 0) {
             OptionPaneCustom.showErrorDialog(this, "Ngày báo hủy không thể lớn hơn ngày kết thúc hợp đồng.");
             return;
         }
-
+        
         if (OptionPaneCustom.showOptionDialog(this, "Bạn có muốn lưu lại thay đổi không?", "Xác nhận hủy hợp đồng")) {
             ContractManager.getInstance().cancleContract(contractSelected.getId(), status);
             contractForm.loadDataToTable(ContractManager.getInstance().getContracts());
+            OptionPaneCustom.showSuccessDialog(this, "Báo hủy hợp đồng thành công!");
             this.dispose();
         }
     }//GEN-LAST:event_btnNotiMouseClicked

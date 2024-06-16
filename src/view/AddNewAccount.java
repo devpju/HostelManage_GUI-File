@@ -1,8 +1,8 @@
 package view;
 
-import controller.AccountDAO;
+import controller.dao.AccountDAO;
 import model.Account;
-import controller.AccountManager;
+import controller.manager.AccountManager;
 import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidPasswordException;

@@ -1,6 +1,6 @@
 package view;
 
-import controller.ContractManager;
+import controller.manager.ContractManager;
 import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import java.awt.HeadlessException;
@@ -10,25 +10,24 @@ import model.Contract;
 import view.component.OptionPaneCustom;
 
 public class UpdateContract extends javax.swing.JFrame {
-
+    
     private final Contract contractSelected;
     ContractForm contractForm;
-
+    
     public UpdateContract(javax.swing.JInternalFrame parent, Contract contractSelected) {
         contractForm = (ContractForm) parent;
         this.contractSelected = contractSelected;
         initComponents();
         setInfo();
     }
-
+    
     private void setInfo() {
         txtID.setText(contractSelected.getId());
         cdateStart.setDate(contractSelected.getStartAt());
         cdateEnd.setDate(contractSelected.getEndAt());
-        System.out.println(contractSelected.getEndAt());
         txtDeposit.setText(String.format("%.0f", contractSelected.getDeposit()));
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -184,11 +183,10 @@ public class UpdateContract extends javax.swing.JFrame {
             Contract updatedContract = ContractManager.getInstance().createNewContract(id, startTime, endTime, depositStr);
             if (OptionPaneCustom.showOptionDialog(this,
                     "Bạn có đồng ý thay đổi thông tin hợp đồng không?", "Xác nhận thay đổi thông tin hợp đồng")) {
-                System.out.println(updatedContract);
-
+                
                 ContractManager.getInstance().updateContractById(id, updatedContract);
                 contractForm.loadDataToTable(ContractManager.getInstance().getContracts());
-                JOptionPane.showMessageDialog(this, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                OptionPaneCustom.showSuccessDialog(this, "Sửa thông tin hợp đồng thành công!");
                 this.dispose();
             }
         } catch (InvalidNumberException e) {

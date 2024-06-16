@@ -1,9 +1,9 @@
 package view;
 
-import controller.ContractManager;
-import controller.RoomManager;
-import controller.SearchRoom;
-import controller.TenantManager;
+import controller.manager.ContractManager;
+import controller.manager.RoomManager;
+import controller.search.SearchRoom;
+import controller.manager.TenantManager;
 import exception.EmptyInputException;
 import exception.InvalidNameException;
 import exception.InvalidNumberException;
@@ -11,22 +11,22 @@ import exception.InvalidPhoneNumberException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import model.Contract;
 import model.Room;
 import model.Tenant;
-import raven.toast.Notifications;
 import view.component.OptionPaneCustom;
 
 public class AddNewTenant extends javax.swing.JFrame {
-
+    
     private TenantForm tenantHome;
     private DefaultTableModel tblModel;
     private List<Room> rooms = RoomManager.getInstance().getRooms();
     private int rowSelected = -1;
     private Room roomSelected;
-
+    
     public AddNewTenant(javax.swing.JInternalFrame parent) {
         initComponents();
         tenantHome = (TenantForm) parent;
@@ -35,22 +35,22 @@ public class AddNewTenant extends javax.swing.JFrame {
         initTable();
         loadDataToTable(rooms);
     }
-
+    
     public int getRowSelected() {
         return this.rowSelected;
     }
-
+    
     public Room getRoomSelected() {
         return roomSelected;
     }
-
+    
     public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "ID", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblRoomChooser.setModel(tblModel);
     }
-
+    
     public final void loadDataToTable(List<Room> rooms) {
         try {
             tblModel.setRowCount(0);
@@ -60,18 +60,17 @@ public class AddNewTenant extends javax.swing.JFrame {
                     stt++, room.getId().toUpperCase(), room.getStatus()
                 });
             }
-            System.out.println("Làm mới bảng rooms thành công!");
         } catch (Exception e) {
-            System.out.println("Lỗi: " + e.getMessage());
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         }
     }
-
+    
     public Room getRoomSelect() {
         int roomRow = tblRoomChooser.getSelectedRow();
         Room room = RoomManager.getInstance().getRooms().get(roomRow);
         return room;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -223,6 +222,7 @@ public class AddNewTenant extends javax.swing.JFrame {
 
         txtAddressT.setToolTipText("");
 
+        cdateDobT.setLocale(new Locale("vi", "VN"));
         cdateDobT.setDate(Calendar.getInstance().getTime());
         cdateDobT.setDateFormatString("dd/MM/yyyy");
 
@@ -326,9 +326,11 @@ public class AddNewTenant extends javax.swing.JFrame {
 
         jLabel9.setText("Tiền cọc:");
 
+        cdateStartC.setLocale(new Locale("vi", "VN"));
         cdateStartC.setDate(Calendar.getInstance().getTime());
         cdateStartC.setDateFormatString("dd/MM/yyyy");
 
+        cdateEndC.setLocale(new Locale("vi", "VN"));
         cdateEndC.setDate(Calendar.getInstance().getTime());
         cdateEndC.setDateFormatString("dd/MM/yyyy");
 
@@ -408,9 +410,9 @@ public class AddNewTenant extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(btnAddT, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAddT, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
         );
         jPanel2Layout.setVerticalGroup(
@@ -456,7 +458,7 @@ public class AddNewTenant extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseMouseClicked
 
     private void inputSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputSearchKeyReleased
-
+        
         String searchContent = inputSearch.getText();
         List<Room> result = SearchRoom.searchAll(searchContent);
         loadDataToTable(result);
@@ -470,7 +472,6 @@ public class AddNewTenant extends javax.swing.JFrame {
     private void tblRoomChooserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoomChooserMouseClicked
         rowSelected = tblRoomChooser.getSelectedRow();
         roomSelected = RoomManager.getInstance().getRooms().get(rowSelected);
-        System.out.println(roomSelected);
         txtIdT.setText(TenantManager.getInstance().createIdTenant(roomSelected));
         txtIdC.setText(TenantManager.getInstance().createIdContract());
     }//GEN-LAST:event_tblRoomChooserMouseClicked
@@ -487,24 +488,23 @@ public class AddNewTenant extends javax.swing.JFrame {
             Date startContract = cdateStartC.getDate();
             Date endContract = cdateEndC.getDate();
             String depositContract = txtDepositC.getText();
-
+            
             if (rowSelected == -1) {
                 throw new Exception("Chọn phòng để thêm khách thuê mới!");
             }
-
-            Contract newContract = ContractManager.getInstance().createNewContract(idContract, startContract, 
+            
+            Contract newContract = ContractManager.getInstance().createNewContract(idContract, startContract,
                     endContract, depositContract);
             newContract.updateStatus();
             Tenant newTenant = TenantManager.getInstance().createNewTenant(idTenant, nameTenant, roomSelected.getId(),
                     genderTenant, dobTenant, phoneTenant, addressTenant, newContract);
-
+            
             TenantManager.getInstance().addNewTenant(roomSelected, newTenant);
-
-            Notifications.getInstance().show(Notifications.Type.SUCCESS,
-                    Notifications.Location.TOP_CENTER, "Thêm khách thuê mới thành công!");
-
+            
+            OptionPaneCustom.showSuccessDialog(this, "Thêm khách thuê mới thành công!");
+            
             loadDataToTable(rooms);
-
+            
             tenantHome.loadDataToTable(TenantManager.getInstance().getTenants());
             txtIdT.setText("");
             txtIdC.setText("");
@@ -516,7 +516,7 @@ public class AddNewTenant extends javax.swing.JFrame {
             startContract.setTime(System.currentTimeMillis());
             endContract.setTime(System.currentTimeMillis());
             dobTenant.setTime(System.currentTimeMillis());
-
+            
         } catch (EmptyInputException e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (InvalidNumberException e) {
