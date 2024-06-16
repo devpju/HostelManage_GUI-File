@@ -4,7 +4,7 @@ import exception.EmptyInputException;
 import exception.InvalidNumberException;
 import exception.InvalidPhoneNumberException;
 import model.Hostel;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class HostelManager {
 
@@ -37,9 +37,9 @@ public class HostelManager {
         }
         double elecUnitPrice, waterUnitPrice, internetCost;
         try {
-            elecUnitPrice = FormatterDisplay.parsePrice(elecUnitPriceStr);
-            waterUnitPrice = FormatterDisplay.parsePrice(waterUnitPriceStr);
-            internetCost = FormatterDisplay.parsePrice(internetCostStr);
+            elecUnitPrice = FormatterUtil.parsePrice(elecUnitPriceStr);
+            waterUnitPrice = FormatterUtil.parsePrice(waterUnitPriceStr);
+            internetCost = FormatterUtil.parsePrice(internetCostStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Số tiền không hợp lệ.");
         }

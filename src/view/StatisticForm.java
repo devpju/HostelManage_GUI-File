@@ -9,7 +9,7 @@ import java.util.Locale;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Statistic.StatisticByMonthChart;
 import model.Statistic.StatisticByMonthFilter;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class StatisticForm extends javax.swing.JInternalFrame {
 
@@ -36,12 +36,12 @@ public class StatisticForm extends javax.swing.JInternalFrame {
     public final void setStatisticFilterBill(int month, int year) {
         StatisticByMonthFilter statisticFilter = new StatisticByMonthFilter(month, year);
         txtTotalNumberElec.setText(String.valueOf(statisticFilter.getTotalNumberElec()));
-        txtTotalElecCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalElecCost()) + " VNĐ");
+        txtTotalElecCost.setText(FormatterUtil.formatPrice(statisticFilter.getTotalElecCost()) + " VNĐ");
         txtTotalNumberWater.setText(String.valueOf(statisticFilter.getTotalNumberWater()));
-        txtTotalWaterCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalWaterCost()) + " VNĐ");
-        txtTotalInternetCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalInternetCost()) + " VNĐ");
-        txtTotalRentCost.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRentCost()) + " VNĐ");
-        txtTotalRevenue.setText(FormatterDisplay.formatPrice(statisticFilter.getTotalRevenue()) + " VNĐ");
+        txtTotalWaterCost.setText(FormatterUtil.formatPrice(statisticFilter.getTotalWaterCost()) + " VNĐ");
+        txtTotalInternetCost.setText(FormatterUtil.formatPrice(statisticFilter.getTotalInternetCost()) + " VNĐ");
+        txtTotalRentCost.setText(FormatterUtil.formatPrice(statisticFilter.getTotalRentCost()) + " VNĐ");
+        txtTotalRevenue.setText(FormatterUtil.formatPrice(statisticFilter.getTotalRevenue()) + " VNĐ");
 
     }
 

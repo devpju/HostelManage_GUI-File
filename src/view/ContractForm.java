@@ -10,7 +10,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Contract;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class ContractForm extends javax.swing.JInternalFrame {
@@ -45,8 +45,8 @@ public class ContractForm extends javax.swing.JInternalFrame {
             tblModel.setRowCount(0);
             for (Contract contract : contracts) {
                 tblModel.addRow(new Object[]{
-                    stt++, contract.getId(), FormatterDisplay.formatDate(contract.getStartAt()), FormatterDisplay.formatDate(contract.getEndAt()),
-                    contract.getStatus(), FormatterDisplay.formatPrice(contract.getDeposit())
+                    stt++, contract.getId(), FormatterUtil.formatDate(contract.getStartAt()), FormatterUtil.formatDate(contract.getEndAt()),
+                    contract.getStatus(), FormatterUtil.formatPrice(contract.getDeposit())
                 });
             }
         } catch (Exception e) {

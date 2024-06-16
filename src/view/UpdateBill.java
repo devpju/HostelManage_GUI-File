@@ -8,7 +8,7 @@ import java.awt.HeadlessException;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Bill;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class UpdateBill extends javax.swing.JFrame {
@@ -33,9 +33,9 @@ public class UpdateBill extends javax.swing.JFrame {
         txtNumberWater.setText(String.valueOf(billSelected.getNumberWater()));
         txtInterCost.setText(String.valueOf(billSelected.getInternetCost()));
         cbbStatus.setSelectedItem(billSelected.getStatus());
-        txtElecCost.setText(FormatterDisplay.formatPrice(billSelected.ElecCost()));
-        txtWaterCost.setText(FormatterDisplay.formatPrice(billSelected.WaterCost()));
-        txtRentCost.setText(FormatterDisplay.formatPrice(billSelected.getRentCost()));
+        txtElecCost.setText(FormatterUtil.formatPrice(billSelected.ElecCost()));
+        txtWaterCost.setText(FormatterUtil.formatPrice(billSelected.WaterCost()));
+        txtRentCost.setText(FormatterUtil.formatPrice(billSelected.getRentCost()));
     }
 
     @SuppressWarnings("unchecked")
@@ -322,7 +322,7 @@ public class UpdateBill extends javax.swing.JFrame {
             int numberElec = Integer.parseInt(txtNumberElec.getText());
             double elecUnitPrice = HostelManager.getInstance().getHostel().getElecUnitPrice();
             double elecCost = numberElec * elecUnitPrice;
-            txtElecCost.setText(FormatterDisplay.formatPrice(elecCost));
+            txtElecCost.setText(FormatterUtil.formatPrice(elecCost));
         } catch (NumberFormatException e) {
             txtElecCost.setText("");
         }
@@ -333,7 +333,7 @@ public class UpdateBill extends javax.swing.JFrame {
             int numberWater = Integer.parseInt(txtNumberWater.getText());
             double waterUnitPrice = HostelManager.getInstance().getHostel().getWaterUnitPrice();
             double waterCost = numberWater * waterUnitPrice;
-            txtWaterCost.setText(FormatterDisplay.formatPrice(waterCost));
+            txtWaterCost.setText(FormatterUtil.formatPrice(waterCost));
         } catch (NumberFormatException e) {
             txtWaterCost.setText("");
         }

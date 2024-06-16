@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 import model.Room;
 import model.Bill;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class BillManager {
 
@@ -65,7 +65,7 @@ public class BillManager {
         newBill.setId(id);
         newBill.setIdRoom(idRoom);
         newBill.setStartAt(startAt);
-        double rentCost = FormatterDisplay.parsePrice(rentCostStr);
+        double rentCost = FormatterUtil.parsePrice(rentCostStr);
         int numberElec;
         try {
             numberElec = Integer.parseInt(numberElecStr);

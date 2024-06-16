@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import model.Room;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class RoomForm extends javax.swing.JInternalFrame {
@@ -82,7 +82,7 @@ public class RoomForm extends javax.swing.JInternalFrame {
 
                 tblModel.addRow(new Object[]{
                     stt++, room.getId().toUpperCase(), room.getArea(), room.getType(),
-                    FormatterDisplay.formatPriceDisplay(room.getRentCost()), room.getStatus()
+                    FormatterUtil.formatPriceDisplay(room.getRentCost()), room.getStatus()
                 });
             }
         } catch (Exception e) {

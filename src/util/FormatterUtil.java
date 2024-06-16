@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class FormatterDisplay {
+public class FormatterUtil {
 
     public static String formatPrice(double price) {
         return String.format("%,.0f", price);

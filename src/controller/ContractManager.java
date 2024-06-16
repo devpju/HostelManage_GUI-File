@@ -8,7 +8,7 @@ import java.util.List;
 import model.Contract;
 import model.Room;
 import model.Tenant;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class ContractManager {
 
@@ -44,7 +44,7 @@ public class ContractManager {
         }
         double deposit;
         try {
-            deposit = FormatterDisplay.parsePrice(depositStr);
+            deposit = FormatterUtil.parsePrice(depositStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Tiền cọc không hơp lệ.");
         }

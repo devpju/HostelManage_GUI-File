@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import model.Tenant;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class TenantForm extends javax.swing.JInternalFrame {
@@ -55,7 +55,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
                     tenant.getId(),
                     tenant.getName(),
                     tenant.getGender(),
-                    FormatterDisplay.formatDate(tenant.getDob()),
+                    FormatterUtil.formatDate(tenant.getDob()),
                     tenant.getPhone(),
                     tenant.getAddress(),
                     tenant.getContract().getStatus()

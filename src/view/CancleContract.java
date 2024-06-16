@@ -3,7 +3,7 @@ package view;
 import controller.ContractManager;
 import java.util.Date;
 import model.Contract;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class CancleContract extends javax.swing.JFrame {
@@ -121,7 +121,7 @@ public class CancleContract extends javax.swing.JFrame {
         System.out.println(cdate.getDate());
 
         Date dateEnd = cdate.getDate();
-        String status = "Hủy HĐ: " + FormatterDisplay.formatDate(dateEnd);
+        String status = "Hủy HĐ: " + FormatterUtil.formatDate(dateEnd);
 
         int compareDate = dateEnd.compareTo(contractSelected.getEndAt());
         if (compareDate > 0) {

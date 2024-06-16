@@ -11,7 +11,7 @@ import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Bill;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
 public class BillForm extends javax.swing.JInternalFrame {
@@ -54,14 +54,14 @@ public class BillForm extends javax.swing.JInternalFrame {
                     stt++,
                     bill.getIdRoom(),
                     bill.getId(),
-                    FormatterDisplay.formatDate(bill.getStartAt()),
+                    FormatterUtil.formatDate(bill.getStartAt()),
                     bill.getNumberElec(),
-                    FormatterDisplay.formatPrice(bill.ElecCost()),
+                    FormatterUtil.formatPrice(bill.ElecCost()),
                     bill.getNumberWater(),
-                    FormatterDisplay.formatPrice(bill.WaterCost()),
-                    FormatterDisplay.formatPrice(bill.getInternetCost()),
-                    FormatterDisplay.formatPrice(bill.getRentCost()),
-                    FormatterDisplay.formatPrice(bill.sumCost()),
+                    FormatterUtil.formatPrice(bill.WaterCost()),
+                    FormatterUtil.formatPrice(bill.getInternetCost()),
+                    FormatterUtil.formatPrice(bill.getRentCost()),
+                    FormatterUtil.formatPrice(bill.sumCost()),
                     bill.getStatus()
                 });
             }

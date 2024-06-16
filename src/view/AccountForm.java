@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import model.Account;
 import view.component.OptionPaneCustom;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class AccountForm extends javax.swing.JInternalFrame {
 
@@ -47,7 +47,7 @@ public class AccountForm extends javax.swing.JInternalFrame {
             for (Account acc : accounts) {
                 tblModel.addRow(new Object[]{
                     stt++, acc.getUsername(), acc.getName(),
-                    FormatterDisplay.formatPhoneNumber(acc.getPhone()), acc.getRole()
+                    FormatterUtil.formatPhoneNumber(acc.getPhone()), acc.getRole()
                 });
             }
         } catch (Exception e) {

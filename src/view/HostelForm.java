@@ -7,7 +7,7 @@ import exception.InvalidPhoneNumberException;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.Hostel;
 import view.component.OptionPaneCustom;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public final class HostelForm extends javax.swing.JInternalFrame {
     
@@ -29,10 +29,10 @@ public final class HostelForm extends javax.swing.JInternalFrame {
         headingNameHostel.setText(("NHÀ TRỌ " + hostel.getName()).toUpperCase());
         txtNameHostel.setText(hostel.getName());
         txtAddressHostel.setText(hostel.getAddress());
-        txtPhoneHostel.setText(FormatterDisplay.formatPhoneNumber(hostel.getPhone()));
-        txtElecUnit.setText(FormatterDisplay.formatPrice(hostel.getElecUnitPrice()));
-        txtWaterUnit.setText(FormatterDisplay.formatPrice(hostel.getWaterUnitPrice()));
-        txtInternetCost.setText(FormatterDisplay.formatPrice(hostel.getInternetCost()));
+        txtPhoneHostel.setText(FormatterUtil.formatPhoneNumber(hostel.getPhone()));
+        txtElecUnit.setText(FormatterUtil.formatPrice(hostel.getElecUnitPrice()));
+        txtWaterUnit.setText(FormatterUtil.formatPrice(hostel.getWaterUnitPrice()));
+        txtInternetCost.setText(FormatterUtil.formatPrice(hostel.getInternetCost()));
     }
     
     @SuppressWarnings("unchecked")
@@ -234,7 +234,7 @@ public final class HostelForm extends javax.swing.JInternalFrame {
         try {
             String name = txtNameHostel.getText();
             String address = txtAddressHostel.getText();
-            String phone = FormatterDisplay.parsePhoneNumber(txtPhoneHostel.getText());
+            String phone = FormatterUtil.parsePhoneNumber(txtPhoneHostel.getText());
             String elecUnitPriceStr = txtElecUnit.getText();
             String waterUnitPriceStr = txtWaterUnit.getText();
             String internetCostStr = txtInternetCost.getText();

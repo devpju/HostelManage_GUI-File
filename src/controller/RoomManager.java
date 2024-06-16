@@ -7,7 +7,7 @@ import java.util.List;
 import model.Bill;
 import model.Room;
 import model.Tenant;
-import util.FormatterDisplay;
+import util.FormatterUtil;
 
 public class RoomManager {
 
@@ -45,7 +45,7 @@ public class RoomManager {
 
         double rentCost;
         try {
-            rentCost = FormatterDisplay.parsePrice(rentCostStr);
+            rentCost = FormatterUtil.parsePrice(rentCostStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Giá thuê không hợp lệ.");
         }
