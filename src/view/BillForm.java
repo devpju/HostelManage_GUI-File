@@ -38,7 +38,7 @@ public class BillForm extends javax.swing.JInternalFrame {
     public final void initTable() {
         tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Ngày lập", "Số điện", "Tiền điện",
-            "Số nước", "Tiền nước", "Tiền mạng", "Tổng tiền", "Trạng thái"};
+            "Số nước", "Tiền nước", "Tiền mạng", "Tiền thuê phòng", "Tổng tiền", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblBill.setModel(tblModel);
         tblBill.setAutoCreateRowSorter(true);
@@ -60,6 +60,7 @@ public class BillForm extends javax.swing.JInternalFrame {
                     bill.getNumberWater(),
                     FormatterDisplay.formatPrice(bill.WaterCost()),
                     FormatterDisplay.formatPrice(bill.getInternetCost()),
+                    FormatterDisplay.formatPrice(bill.getRentCost()),
                     FormatterDisplay.formatPrice(bill.sumCost()),
                     bill.getStatus()
                 });

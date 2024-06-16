@@ -492,7 +492,8 @@ public class AddNewTenant extends javax.swing.JFrame {
                 throw new Exception("Chọn phòng để thêm khách thuê mới!");
             }
 
-            Contract newContract = ContractManager.getInstance().createNewContract(idContract, startContract, endContract, depositContract);
+            Contract newContract = ContractManager.getInstance().createNewContract(idContract, startContract, 
+                    endContract, depositContract);
             newContract.updateStatus();
             Tenant newTenant = TenantManager.getInstance().createNewTenant(idTenant, nameTenant, roomSelected.getId(),
                     genderTenant, dobTenant, phoneTenant, addressTenant, newContract);

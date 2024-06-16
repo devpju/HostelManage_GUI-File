@@ -16,6 +16,7 @@ public class Bill implements Serializable {
     private double internetCost;
     private double elecUnitPrice;
     private double waterUnitPrice;
+    private double rentCost;
     private String status;
 
     public Bill() {
@@ -63,6 +64,14 @@ public class Bill implements Serializable {
 
     public void setIdRoom(String idRoom) {
         this.idRoom = idRoom;
+    }
+
+    public double getRentCost() {
+        return rentCost;
+    }
+
+    public void setRentCost(double rentCost) {
+        this.rentCost = rentCost;
     }
 
     public void setNumberElec(int numberElec) throws InvalidNumberException {
@@ -124,7 +133,7 @@ public class Bill implements Serializable {
     }
 
     public double sumCost() {
-        return this.internetCost + ElecCost() + WaterCost();
+        return this.internetCost + ElecCost() + WaterCost() + this.rentCost;
     }
 
     @Override

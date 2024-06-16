@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import model.Room;
 import model.Bill;
+import util.FormatterDisplay;
 
 public class BillManager {
 
@@ -53,7 +54,7 @@ public class BillManager {
         return selectedRoom.getBills();
     }
 
-    public Bill createNewBill(String id, String idRoom, Date startAt, String numberElecStr, String numberWaterStr, String status)
+    public Bill createNewBill(String id, String idRoom, Date startAt, String numberElecStr, String numberWaterStr, String rentCostStr, String status)
             throws EmptyInputException, InvalidNumberException {
 
         if (id.trim().isEmpty() || numberElecStr.trim().isEmpty() || numberWaterStr.trim().isEmpty() || idRoom.trim().isEmpty()) {
@@ -64,7 +65,7 @@ public class BillManager {
         newBill.setId(id);
         newBill.setIdRoom(idRoom);
         newBill.setStartAt(startAt);
-
+        double rentCost = FormatterDisplay.parsePrice(rentCostStr);
         int numberElec;
         try {
             numberElec = Integer.parseInt(numberElecStr);
@@ -81,6 +82,7 @@ public class BillManager {
         newBill.setNumberWater(numberWater);
         newBill.setStatus(status);
         newBill.setUnitPrice();
+        newBill.setRentCost(rentCost);
         return newBill;
     }
 
