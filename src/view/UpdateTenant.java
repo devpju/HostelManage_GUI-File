@@ -11,6 +11,7 @@ import java.util.Calendar;
 import java.util.Date;
 import model.Contract;
 import model.Tenant;
+import util.DateConverter;
 import view.component.OptionPaneCustom;
 
 public class UpdateTenant extends javax.swing.JFrame {
@@ -33,9 +34,9 @@ public class UpdateTenant extends javax.swing.JFrame {
         txtPhoneT.setText(tenantSelected.getPhone());
         txtAddressT.setText(tenantSelected.getAddress());
         txtDepositC.setText(String.valueOf(tenantSelected.getContract().getDeposit()));
-        cdateStartC.setDate(tenantSelected.getContract().getStartAt());
-        cdateEndC.setDate(tenantSelected.getContract().getEndAt());
-        cdateDobT.setDate(tenantSelected.getDob());
+        cdateStartC.setDate(DateConverter.toDate(tenantSelected.getContract().getStartAt()));
+        cdateEndC.setDate(DateConverter.toDate(tenantSelected.getContract().getEndAt()));
+        cdateDobT.setDate(DateConverter.toDate(tenantSelected.getDob()));
     }
     
     @SuppressWarnings("unchecked")

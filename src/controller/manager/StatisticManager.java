@@ -1,8 +1,9 @@
 package controller.manager;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import model.Account;
 import model.Bill;
 import model.Room;
@@ -43,17 +44,19 @@ public class StatisticManager {
 
     public List<StatisticByMonthChart> getRevenueByMonth(int year) {
         List<StatisticByMonthChart> revenues = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            int month = i;
+
+        for (int i = 1; i <= 12; i++) {
             double totalElectricityCost = 0.0;
             double totalWaterCost = 0.0;
             double totalRoomRevenue = 0.0;
             double totalRevenue = 0.0;
+
             for (Bill bill : bills) {
                 if (bill.getStatus().equals("Đã thanh toán")) {
-                    Calendar cal = Calendar.getInstance();
-                    cal.setTime(bill.getStartAt());
-                    if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
+                    LocalDate startAt = bill.getStartAt();
+                    YearMonth billYearMonth = YearMonth.from(startAt);
+
+                    if (billYearMonth.getYear() == year && billYearMonth.getMonthValue() == i) {
                         totalElectricityCost += bill.ElecCost();
                         totalWaterCost += bill.WaterCost();
                         totalRoomRevenue += bill.getRentCost();
@@ -62,7 +65,7 @@ public class StatisticManager {
                 }
             }
 
-            StatisticByMonthChart statistic = new StatisticByMonthChart(month + 1, totalElectricityCost, totalWaterCost, totalRoomRevenue, totalRevenue);
+            StatisticByMonthChart statistic = new StatisticByMonthChart(i, totalElectricityCost, totalWaterCost, totalRoomRevenue, totalRevenue);
             revenues.add(statistic);
         }
 

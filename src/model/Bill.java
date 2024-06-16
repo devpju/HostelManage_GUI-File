@@ -3,14 +3,14 @@ package model;
 import controller.manager.HostelManager;
 import exception.InvalidNumberException;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Bill implements Serializable {
 
     private String id;
     private String idRoom;
-    private Date startAt;
+    private LocalDate startAt;
     private int numberElec;
     private int numberWater;
     private double internetCost;
@@ -22,7 +22,7 @@ public class Bill implements Serializable {
     public Bill() {
     }
 
-    public Bill(String id, String idRoom, Date startAt, int numberElec, int numberWater, String status) {
+    public Bill(String id, String idRoom, LocalDate startAt, int numberElec, int numberWater, String status) {
         this.id = id;
         this.startAt = startAt;
         this.numberElec = numberElec;
@@ -46,11 +46,11 @@ public class Bill implements Serializable {
         this.id = id;
     }
 
-    public Date getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public void setStartAt(Date startAt) {
+    public void setStartAt(LocalDate startAt) {
         this.startAt = startAt;
     }
 

@@ -1,6 +1,7 @@
 package view;
 
 import model.Tenant;
+import util.DateConverter;
 import util.FormatterUtil;
 
 public class DetailTenant extends javax.swing.JFrame {
@@ -18,12 +19,12 @@ public class DetailTenant extends javax.swing.JFrame {
         txtIDRoom.setText(tenantSelected.getIdRoom());
         txtName.setText(tenantSelected.getName());
         txtGender.setText(tenantSelected.getGender());
-        txtDob.setText(FormatterUtil.formatDate(tenantSelected.getDob()));
+        txtDob.setText(FormatterUtil.localDateToStr(tenantSelected.getDob()));
         txtPhone.setText(tenantSelected.getPhone());
         txtAddress.setText(tenantSelected.getAddress());
         txtIDContract.setText(tenantSelected.getContract().getId());
-        txtStart.setText(FormatterUtil.formatDate(tenantSelected.getContract().getStartAt()));
-        txtEnd.setText(FormatterUtil.formatDate(tenantSelected.getContract().getEndAt()));
+        txtStart.setText(FormatterUtil.localDateToStr(tenantSelected.getContract().getStartAt()));
+        txtEnd.setText(FormatterUtil.localDateToStr(tenantSelected.getContract().getEndAt()));
         txtStatus.setText(tenantSelected.getContract().getStatus());
         txtDeposit.setText(FormatterUtil.formatPrice(tenantSelected.getContract().getDeposit()));
 

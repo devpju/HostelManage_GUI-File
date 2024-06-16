@@ -7,6 +7,7 @@ import java.awt.HeadlessException;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import model.Contract;
+import util.DateConverter;
 import view.component.OptionPaneCustom;
 
 public class UpdateContract extends javax.swing.JFrame {
@@ -23,8 +24,8 @@ public class UpdateContract extends javax.swing.JFrame {
     
     private void setInfo() {
         txtID.setText(contractSelected.getId());
-        cdateStart.setDate(contractSelected.getStartAt());
-        cdateEnd.setDate(contractSelected.getEndAt());
+        cdateStart.setDate(DateConverter.toDate(contractSelected.getStartAt()));
+        cdateEnd.setDate(DateConverter.toDate(contractSelected.getEndAt()));
         txtDeposit.setText(String.format("%.0f", contractSelected.getDeposit()));
     }
     

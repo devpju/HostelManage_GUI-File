@@ -46,7 +46,7 @@ public class RoomManager {
 
         double rentCost;
         try {
-            rentCost = FormatterUtil.parsePrice(rentCostStr);
+            rentCost = FormatterUtil.strToDouble(rentCostStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Giá thuê không hợp lệ.");
         }

@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import model.Room;
 import model.Bill;
+import util.DateConverter;
 import util.FormatterUtil;
 
 public class BillManager {
@@ -65,8 +66,8 @@ public class BillManager {
         Bill newBill = new Bill();
         newBill.setId(id);
         newBill.setIdRoom(idRoom);
-        newBill.setStartAt(startAt);
-        double rentCost = FormatterUtil.parsePrice(rentCostStr);
+        newBill.setStartAt(DateConverter.toLocalDate(startAt));
+        double rentCost = FormatterUtil.strToDouble(rentCostStr);
         int numberElec;
         try {
             numberElec = Integer.parseInt(numberElecStr);

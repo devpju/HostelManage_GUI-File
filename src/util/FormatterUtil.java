@@ -3,7 +3,9 @@ package util;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class FormatterUtil {
@@ -17,22 +19,21 @@ public class FormatterUtil {
         return formatter.format(number);
     }
 
-    public static double parsePrice(String priceString) throws NumberFormatException {
+    public static double strToDouble(String priceString) throws NumberFormatException {
         String cleanedPriceString = priceString.replace(",", "");
         double price;
         price = Double.parseDouble(cleanedPriceString);
         return price;
     }
 
-    public static String formatDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        return formatter.format(date);
+    public static String localDateToStr(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
     }
 
-    public static Date formatDateTable(Date date) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String formattedDate = formatter.format(date);
-        return formatter.parse(formattedDate);
+    public static String formatLocalDate(LocalDate localDate) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return localDate.format(formatter);
     }
 
     public static Date parseDate(String dateString) throws ParseException {

@@ -9,6 +9,7 @@ import java.util.List;
 import model.Contract;
 import model.Room;
 import model.Tenant;
+import util.DateConverter;
 import util.FormatterUtil;
 
 public class ContractManager {
@@ -45,14 +46,14 @@ public class ContractManager {
         }
         double deposit;
         try {
-            deposit = FormatterUtil.parsePrice(depositStr);
+            deposit = FormatterUtil.strToDouble(depositStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Tiền cọc không hơp lệ.");
         }
         Contract newContract = new Contract();
         newContract.setId(id);
-        newContract.setStartAt(startAt);
-        newContract.setEndAt(endAt);
+        newContract.setStartAt(DateConverter.toLocalDate(startAt));
+        newContract.setEndAt(DateConverter.toLocalDate(endAt));
         newContract.setDeposit(deposit);
         return newContract;
     }

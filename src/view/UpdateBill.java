@@ -7,6 +7,7 @@ import exception.InvalidNumberException;
 import java.awt.HeadlessException;
 import java.util.Date;
 import model.Bill;
+import util.DateConverter;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
@@ -25,7 +26,7 @@ public class UpdateBill extends javax.swing.JFrame {
 
     final void setInfoBill() {
         txtIdBill.setText(billSelected.getId());
-        cdateStartAt.setDate(billSelected.getStartAt());
+        cdateStartAt.setDate(DateConverter.toDate(billSelected.getStartAt()));
         txtNumberElec.setText(String.valueOf(billSelected.getNumberElec()));
         txtNumberWater.setText(String.valueOf(billSelected.getNumberWater()));
         txtInterCost.setText(String.valueOf(billSelected.getInternetCost()));

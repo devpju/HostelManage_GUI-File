@@ -3,7 +3,7 @@ package model;
 import exception.InvalidNameException;
 import exception.InvalidPhoneNumberException;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 import util.RegexValidator;
 
@@ -13,7 +13,7 @@ public class Tenant implements Serializable {
     private String name;
     private String idRoom;
     private String gender;
-    private Date dob;
+    private LocalDate dob;
     private String phone;
     private String address;
     private Contract contract;
@@ -22,7 +22,7 @@ public class Tenant implements Serializable {
     }
 
     public Tenant(String id, String name, String idRoom, String gender,
-            Date dob, String phone, String address, Contract contract) {
+            LocalDate dob, String phone, String address, Contract contract) {
         this.id = id;
         this.name = name;
         this.idRoom = idRoom;
@@ -68,11 +68,11 @@ public class Tenant implements Serializable {
         this.gender = gender;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 

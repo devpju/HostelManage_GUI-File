@@ -1,7 +1,7 @@
 package model.Statistic;
 
 import controller.manager.BillManager;
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 import model.Bill;
 
@@ -25,10 +25,10 @@ public class StatisticByMonthFilter {
     public final void statisticBills(int month, int year) {
         List<Bill> bills = BillManager.getInstance().getBills();
         for (Bill bill : bills) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(bill.getStartAt());
-            int billMonth = cal.get(Calendar.MONTH) + 1;
-            int billYear = cal.get(Calendar.YEAR);
+            LocalDate startAt = bill.getStartAt();
+            int billMonth = startAt.getMonthValue();
+            int billYear = startAt.getYear();
+
             if ("Đã thanh toán".equals(bill.getStatus()) && billMonth == month && billYear == year) {
                 totalNumberElec += bill.getNumberElec();
                 totalNumberWater += bill.getNumberWater();

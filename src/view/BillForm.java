@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
@@ -44,59 +45,13 @@ public class BillForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel() {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return switch (columnIndex) {
-                    case 0, 4, 6 ->
-                        Integer.class; 
-                    case 5, 7, 8, 9, 10 ->
-                        Double.class; 
-                    case 3 ->
-                        Date.class; 
-                    default ->
-                        String.class;
-                };
-            }
-        };
+        tblModel = new DefaultTableModel();
 
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Ngày lập", "Số điện", "Tiền điện",
             "Số nước", "Tiền nước", "Tiền mạng", "Tiền thuê phòng", "Tổng tiền", "Trạng thái"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblBill.setModel(tblModel);
-        tblBill.setAutoCreateRowSorter(true);
 
-        TableRowSorter<TableModel> sorter = new TableRowSorter<>(tblModel);
-        sorter.setComparator(3, (String s1, String s2) -> {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            try {
-                Date d1 = dateFormat.parse(s1);
-                Date d2 = dateFormat.parse(s2);
-                return d1.compareTo(d2);
-            } catch (ParseException e) {
-                throw new IllegalArgumentException(e);
-            }
-        });
-
-        sorter.setComparator(5, (String s1, String s2) -> {
-            DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-            symbols.setGroupingSeparator(',');
-            DecimalFormat currencyFormat = new DecimalFormat("#,##0", symbols);
-            try {
-                Number n1 = currencyFormat.parse(s1);
-                Number n2 = currencyFormat.parse(s2);
-                return Double.compare(n1.doubleValue(), n2.doubleValue());
-            } catch (ParseException e) {
-                throw new IllegalArgumentException(e);
-            }
-        });
-
-        sorter.setComparator(7, sorter.getComparator(5));
-        sorter.setComparator(8, sorter.getComparator(5));
-        sorter.setComparator(9, sorter.getComparator(5));
-        sorter.setComparator(10, sorter.getComparator(5));
-
-        tblBill.setRowSorter(sorter);
     }
 
     private void customTable() {
@@ -125,14 +80,12 @@ public class BillForm extends javax.swing.JInternalFrame {
         try {
             int stt = 1;
             tblModel.setRowCount(0);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
             for (Bill bill : bills) {
                 tblModel.addRow(new Object[]{
                     stt++,
                     bill.getIdRoom(),
                     bill.getId(),
-                    dateFormat.format(bill.getStartAt()),
+                    FormatterUtil.formatLocalDate(bill.getStartAt()),
                     bill.getNumberElec(),
                     FormatterUtil.formatPriceTable(bill.ElecCost()),
                     bill.getNumberWater(),

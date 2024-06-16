@@ -38,9 +38,9 @@ public class HostelManager {
         }
         double elecUnitPrice, waterUnitPrice, internetCost;
         try {
-            elecUnitPrice = FormatterUtil.parsePrice(elecUnitPriceStr);
-            waterUnitPrice = FormatterUtil.parsePrice(waterUnitPriceStr);
-            internetCost = FormatterUtil.parsePrice(internetCostStr);
+            elecUnitPrice = FormatterUtil.strToDouble(elecUnitPriceStr);
+            waterUnitPrice = FormatterUtil.strToDouble(waterUnitPriceStr);
+            internetCost = FormatterUtil.strToDouble(internetCostStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Số tiền không hợp lệ.");
         }

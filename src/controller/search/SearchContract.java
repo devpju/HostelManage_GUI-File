@@ -45,17 +45,12 @@ public class SearchContract {
         return result;
     }
 
-    public static List<Contract> searchByDate(Date start, Date end) {
+    public static List<Contract> searchByDate(LocalDate startDate, LocalDate endDate) {
         List<Contract> result = new ArrayList<>();
-
-        LocalDate startDate = DateConverter.toLocalDate(start);
-        LocalDate endDate = DateConverter.toLocalDate(end);
-
         for (Contract contract : contracts) {
-            LocalDate startAt = DateConverter.toLocalDate(contract.getStartAt());
-            LocalDate endAt = DateConverter.toLocalDate(contract.getEndAt());
-
-            if (startAt != null && endAt != null && isDateInRange(startDate, endDate, startAt, endAt)) {
+            LocalDate startAt = contract.getStartAt();
+            LocalDate endAt = contract.getEndAt();
+            if (!endDate.isBefore(startAt) && !startDate.isAfter(endAt)) {
                 result.add(contract);
             }
         }
@@ -63,7 +58,4 @@ public class SearchContract {
         return result;
     }
 
-    private static boolean isDateInRange(LocalDate startRange, LocalDate endRange, LocalDate startDate, LocalDate endDate) {
-        return !startDate.isBefore(startRange) && !endDate.isAfter(endRange);
-    }
 }

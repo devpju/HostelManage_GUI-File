@@ -2,21 +2,22 @@ package model;
 
 import exception.InvalidNumberException;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 
 public class Contract implements Serializable {
 
     private String id;
-    private Date startAt;
-    private Date endAt;
+    private LocalDate startAt;
+    private LocalDate endAt;
     private String status;
     private double deposit;
 
     public Contract() {
     }
 
-    public Contract(String id, Date startAt, Date endAt, double deposit) {
+    public Contract(String id, LocalDate startAt, LocalDate endAt, double deposit) {
         this.id = id;
         this.startAt = startAt;
         this.endAt = endAt;
@@ -31,19 +32,19 @@ public class Contract implements Serializable {
         this.id = id;
     }
 
-    public Date getStartAt() {
+    public LocalDate getStartAt() {
         return startAt;
     }
 
-    public void setStartAt(Date startAt) {
+    public void setStartAt(LocalDate startAt) {
         this.startAt = startAt;
     }
 
-    public Date getEndAt() {
+    public LocalDate getEndAt() {
         return endAt;
     }
 
-    public void setEndAt(Date endAt) {
+    public void setEndAt(LocalDate endAt) {
         this.endAt = endAt;
     }
 
@@ -67,15 +68,7 @@ public class Contract implements Serializable {
     }
 
     public final void updateStatus() {
-        Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(startAt);
-
-        Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTime(endAt);
-
-        long milliseconds = endCalendar.getTimeInMillis() - startCalendar.getTimeInMillis();
-        long daysRemaining = milliseconds / (1000 * 60 * 60 * 24);
-
+        long daysRemaining = ChronoUnit.DAYS.between(startAt, endAt);
         if (daysRemaining <= 0) {
             status = "Đã hết hạn";
         } else {

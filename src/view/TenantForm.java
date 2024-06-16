@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import model.Tenant;
+import util.DateConverter;
 import util.FormatterUtil;
 import view.component.OptionPaneCustom;
 
@@ -38,23 +39,10 @@ public class TenantForm extends javax.swing.JInternalFrame {
     }
 
     public final void initTable() {
-        tblModel = new DefaultTableModel() {
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 5) {
-                    return Date.class;
-                } else {
-                    return String.class;
-                }
-            }
-        };
+        tblModel = new DefaultTableModel();
         String[] headerTbl = new String[]{"STT", "Mã phòng", "ID", "Họ và tên", "Giới tính", "Ngày sinh", "Số điện thoại", "Địa chỉ", "Thời hạn hợp đồng"};
         tblModel.setColumnIdentifiers(headerTbl);
         tblTenant.setModel(tblModel);
-
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(tblModel);
-        tblTenant.setRowSorter(sorter);
-
     }
 
     public final void loadDataToTable(List<Tenant> tenants) {
@@ -68,7 +56,7 @@ public class TenantForm extends javax.swing.JInternalFrame {
                     tenant.getId(),
                     tenant.getName(),
                     tenant.getGender(),
-                    FormatterUtil.formatDate(tenant.getDob()),
+                    FormatterUtil.localDateToStr(tenant.getDob()),
                     FormatterUtil.formatPhoneNumber(tenant.getPhone()),
                     tenant.getAddress(),
                     tenant.getContract().getStatus()

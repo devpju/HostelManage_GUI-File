@@ -11,6 +11,7 @@ import java.util.List;
 import model.Contract;
 import model.Room;
 import model.Tenant;
+import util.DateConverter;
 
 public class TenantManager {
 
@@ -77,7 +78,7 @@ public class TenantManager {
         newTenant.setName(name);
         newTenant.setIdRoom(idRoom);
         newTenant.setGender(gender);
-        newTenant.setDob(dob);
+        newTenant.setDob(DateConverter.toLocalDate(dob));
         newTenant.setPhone(phone);
         newTenant.setAddress(address);
         newTenant.setContract(contract);

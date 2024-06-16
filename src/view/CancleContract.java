@@ -1,9 +1,11 @@
 package view;
 
 import controller.manager.ContractManager;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import model.Contract;
-import util.FormatterUtil;
+import util.DateConverter;
 import view.component.OptionPaneCustom;
 
 public class CancleContract extends javax.swing.JFrame {
@@ -120,9 +122,15 @@ public class CancleContract extends javax.swing.JFrame {
     private void btnNotiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNotiMouseClicked
         
         Date dateEnd = cdate.getDate();
-        String status = "Hủy HĐ: " + FormatterUtil.formatDate(dateEnd);
+        LocalDate convertedDateEnd = DateConverter.toLocalDate(dateEnd);
         
-        int compareDate = dateEnd.compareTo(contractSelected.getEndAt());
+        long compareDate = ChronoUnit.DAYS.between(contractSelected.getEndAt(), convertedDateEnd);
+        String status;
+        if (compareDate <= 0) {
+            status = "Đã hết hạn";
+        } else {
+            status = "Còn " + compareDate + " ngày";
+        }
         if (compareDate > 0) {
             OptionPaneCustom.showErrorDialog(this, "Ngày báo hủy không thể lớn hơn ngày kết thúc hợp đồng.");
             return;
