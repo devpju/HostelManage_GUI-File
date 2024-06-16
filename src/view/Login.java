@@ -1,6 +1,8 @@
 package view;
 
 import controller.AccountManager;
+import exception.EmptyInputException;
+import exception.InvalidPasswordException;
 import exception.ObjectExistsException;
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -8,14 +10,14 @@ import javax.swing.text.DefaultCaret;
 import view.component.OptionPaneCustom;
 
 public class Login extends javax.swing.JFrame {
-    
+
     AccountManager accountManager;
-    
+
     public Login() {
         accountManager = AccountManager.getInstance();
         initComponents();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -176,21 +178,23 @@ public class Login extends javax.swing.JFrame {
         try {
             String username = txtUsername.getText().trim();
             String password = new String(pswPassword.getPassword()).trim();
-            
+
             if (!accountManager.authenticate(username, password)) {
                 pswPassword.setText("");
-                throw new Exception("Mật khẩu không chính xác.");
+                throw new InvalidPasswordException("Mật khẩu không chính xác.");
             }
-            
             new Admin().setVisible(true);
             this.dispose();
         } catch (ObjectExistsException e) {
             txtUsername.setText("");
             pswPassword.setText("");
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
+        } catch (InvalidPasswordException e) {
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
+        } catch (EmptyInputException e) {
+            OptionPaneCustom.showErrorDialog(this, e.getMessage());
         } catch (Exception e) {
             OptionPaneCustom.showErrorDialog(this, e.getMessage());
-            
         }
     }//GEN-LAST:event_btnLoginMouseClicked
 
