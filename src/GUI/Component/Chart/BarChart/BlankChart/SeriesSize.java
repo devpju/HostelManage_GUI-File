@@ -1,4 +1,4 @@
-package GUI.Component.Chart.CurveChart.BlankChart;
+package view.component.Chart.BarChart.BlankChart;
 
 public class SeriesSize {
 

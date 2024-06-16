@@ -1,10 +1,8 @@
 package view;
 
-import GUI.Component.Chart.BarChart.Chart;
-import GUI.Component.Chart.BarChart.ModelChart;
+import com.raven.chart.ModelChart;
 import controller.StatisticManager;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import model.StatisticByMonth;
@@ -34,20 +32,22 @@ public class StatisticForm extends javax.swing.JInternalFrame {
 
     private void updateChart(int year) {
         List<StatisticByMonth> statistics = statisticManager.getRevenueByMonth(year);
-
-        revenueChart.addLegend("Điện", new Color(245, 189, 135));
-        revenueChart.addLegend("Nước", new Color(135, 189, 245));
-        revenueChart.addLegend("Phòng", new Color(189, 135, 245));
-        revenueChart.addLegend("Doanh thu", new Color(70, 135, 105));
+        chart.clear();
+        chart.addLegend("Điện", new Color(245, 189, 135));
+        chart.addLegend("Nước", new Color(135, 189, 245));
+        chart.addLegend("Phòng", new Color(189, 135, 245));
+        chart.addLegend("Doanh thu", new Color(139, 229, 222));
         for (int i = 0; i < statistics.size(); i++) {
-            revenueChart.addData(new ModelChart("Tháng " + (i + 1),
-                    new double[]{statistics.get(i).getTotalElectricityCost(), statistics.get(i).getTotalWaterCost(),
-                        statistics.get(i).getTotalRoomRevenue(), statistics.get(i).getTotalRevenue()}));
+            StatisticByMonth stat = statistics.get(i);
+            double[] values = {
+                stat.getTotalElectricityCost(),
+                stat.getTotalWaterCost(),
+                stat.getTotalRoomRevenue(),
+                stat.getTotalRevenue()
+            };
+            chart.addData(new ModelChart("Tháng " + (i + 1), values));
         }
-
-        revenueChart.repaint();
-        revenueChart.validate();
-
+        chart.start();
     }
 
     @SuppressWarnings("unchecked")
@@ -68,7 +68,8 @@ public class StatisticForm extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         lbQuantityTenant = new javax.swing.JLabel();
         panelContainer = new javax.swing.JPanel();
-        revenueChart = new GUI.Component.Chart.BarChart.Chart();
+        chart = new com.raven.chart.Chart();
+        jLabel5 = new javax.swing.JLabel();
 
         setBorder(null);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -190,17 +191,29 @@ public class StatisticForm extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        panelContainer.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Biểu đồ thống kê doanh thu trong năm 2024");
+
         javax.swing.GroupLayout panelContainerLayout = new javax.swing.GroupLayout(panelContainer);
         panelContainer.setLayout(panelContainerLayout);
         panelContainerLayout.setHorizontalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(revenueChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(chart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContainerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(379, 379, 379))
         );
         panelContainerLayout.setVerticalGroup(
             panelContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContainerLayout.createSequentialGroup()
-                .addComponent(revenueChart, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap()
+                .addComponent(chart, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -213,9 +226,9 @@ public class StatisticForm extends javax.swing.JInternalFrame {
                     .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 75, Short.MAX_VALUE)
+                        .addGap(18, 56, Short.MAX_VALUE)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 38, Short.MAX_VALUE)
+                        .addGap(18, 57, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -227,9 +240,9 @@ public class StatisticForm extends javax.swing.JInternalFrame {
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addContainerGap(206, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1050, 700));
@@ -239,10 +252,12 @@ public class StatisticForm extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.raven.chart.Chart chart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -253,6 +268,5 @@ public class StatisticForm extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lbQuantityRoom;
     private javax.swing.JLabel lbQuantityTenant;
     private javax.swing.JPanel panelContainer;
-    private GUI.Component.Chart.BarChart.Chart revenueChart;
     // End of variables declaration//GEN-END:variables
 }

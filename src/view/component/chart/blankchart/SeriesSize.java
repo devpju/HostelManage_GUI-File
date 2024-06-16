@@ -1,4 +1,4 @@
-package GUI.Component.Chart.BarChart.BlankChart;
+package com.raven.chart.blankchart;
 
 public class SeriesSize {
 

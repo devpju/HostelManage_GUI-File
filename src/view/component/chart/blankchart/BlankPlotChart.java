@@ -1,4 +1,4 @@
-package GUI.Component.Chart.BarChart.BlankChart;
+package com.raven.chart.blankchart;
 
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -69,7 +69,7 @@ public class BlankPlotChart extends JComponent {
     }
 
     private void init() {
-        initValues(0, 10);
+        initValues(0, 5);
     }
 
     public void initValues(double minValues, double maxValues) {

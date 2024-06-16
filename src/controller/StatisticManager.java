@@ -43,7 +43,6 @@ public class StatisticManager {
 
     public List<StatisticByMonth> getRevenueByMonth(int year) {
         List<StatisticByMonth> revenues = new ArrayList<>();
-
         for (int i = 0; i < 12; i++) {
             int month = i;
             double totalElectricityCost = 0.0;
@@ -51,14 +50,16 @@ public class StatisticManager {
             double totalRoomRevenue = 0.0;
             double totalRevenue = 0.0;
             for (Bill bill : bills) {
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(bill.getStartAt());
+                if (bill.getStatus().equals("Đã thanh toán")) {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(bill.getStartAt());
 
-                if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
-                    totalElectricityCost += bill.ElecCost();
-                    totalWaterCost += bill.WaterCost();
-                    totalRoomRevenue += (bill.sumCost() - bill.ElecCost() - bill.WaterCost());
-                    totalRevenue += bill.sumCost();
+                    if (cal.get(Calendar.YEAR) == year && cal.get(Calendar.MONTH) == month) {
+                        totalElectricityCost += bill.ElecCost();
+                        totalWaterCost += bill.WaterCost();
+                        totalRoomRevenue += (bill.sumCost() - bill.ElecCost() - bill.WaterCost());
+                        totalRevenue += bill.sumCost();
+                    }
                 }
             }
 

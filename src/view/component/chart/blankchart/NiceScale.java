@@ -1,10 +1,10 @@
-package GUI.Component.Chart.BarChart.BlankChart;
+package com.raven.chart.blankchart;
 
 public class NiceScale {
 
     private double min;
     private double max;
-    private int maxTicks = 10;
+    private int maxTicks = 18;
     private double tickSpacing;
     private double range;
     private double niceMin;

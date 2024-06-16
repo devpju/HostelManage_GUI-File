@@ -67,7 +67,6 @@ public class BillManager {
 
         int numberElec;
         try {
-            System.out.println(numberElecStr);
             numberElec = Integer.parseInt(numberElecStr);
         } catch (NumberFormatException e) {
             throw new InvalidNumberException("Số điện không hợp lệ.");
@@ -115,7 +114,6 @@ public class BillManager {
                 if (bills.get(i).getId().equals(billId)) {
                     bills.set(i, newBill);
                     HostelDAO.updateHostel();
-                    System.out.println("2198734" + bills.get(i));
                     return;
                 }
             }

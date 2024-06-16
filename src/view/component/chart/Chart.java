@@ -1,13 +1,15 @@
-package GUI.Component.Chart.BarChart;
+package com.raven.chart;
 
-import GUI.Component.Chart.BarChart.BlankChart.BlankPlotChart;
-import GUI.Component.Chart.BarChart.BlankChart.BlankPlotChatRender;
-import GUI.Component.Chart.BarChart.BlankChart.SeriesSize;
+import com.raven.chart.blankchart.BlankPlotChart;
+import com.raven.chart.blankchart.BlankPlotChatRender;
+import com.raven.chart.blankchart.SeriesSize;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
+import org.jdesktop.animation.timing.Animator;
+import org.jdesktop.animation.timing.TimingTarget;
+import org.jdesktop.animation.timing.TimingTargetAdapter;
 
 public class Chart extends javax.swing.JPanel {
 
@@ -15,9 +17,22 @@ public class Chart extends javax.swing.JPanel {
     private List<ModelChart> model = new ArrayList<>();
     private final int seriesSize = 12;
     private final int seriesSpace = 6;
+    private final Animator animator;
+    private float animate;
 
     public Chart() {
         initComponents();
+        TimingTarget target = new TimingTargetAdapter() {
+            @Override
+            public void timingEvent(float fraction) {
+                animate = fraction;
+                repaint();
+            }
+        };
+        animator = new Animator(800, target);
+        animator.setResolution(0);
+        animator.setAcceleration(0.5f);
+        animator.setDeceleration(0.5f);
         blankPlotChart.setBlankPlotChatRender(new BlankPlotChatRender() {
             @Override
             public String getLabelText(int index) {
@@ -30,9 +45,8 @@ public class Chart extends javax.swing.JPanel {
                 double x = (size.getWidth() - totalSeriesWidth) / 2;
                 for (int i = 0; i < legends.size(); i++) {
                     ModelLegend legend = legends.get(i);
-                    GradientPaint gra = new GradientPaint(0, 0, new Color(86, 195, 250), 0, (int) (size.getY() + size.getHeight()), legend.getColor());
-                    g2.setPaint(gra);
-                    double seriesValues = chart.getSeriesValuesOf(model.get(index).getValues()[i], size.getHeight());
+                    g2.setColor(legend.getColor());
+                    double seriesValues = chart.getSeriesValuesOf(model.get(index).getValues()[i], size.getHeight()) * animate;
                     g2.fillRect((int) (size.getX() + x), (int) (size.getY() + size.getHeight() - seriesValues), seriesSize, (int) seriesValues);
                     x += seriesSpace + seriesSize;
                 }
@@ -57,11 +71,24 @@ public class Chart extends javax.swing.JPanel {
         }
     }
 
+    public void clear() {
+        animate = 0;
+        blankPlotChart.setLabelCount(0);
+        model.clear();
+        repaint();
+    }
+
+    public void start() {
+        if (!animator.isRunning()) {
+            animator.start();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        blankPlotChart = new GUI.Component.Chart.BarChart.BlankChart.BlankPlotChart();
+        blankPlotChart = new com.raven.chart.blankchart.BlankPlotChart();
         panelLegend = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -92,7 +119,7 @@ public class Chart extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private GUI.Component.Chart.BarChart.BlankChart.BlankPlotChart blankPlotChart;
+    private com.raven.chart.blankchart.BlankPlotChart blankPlotChart;
     private javax.swing.JPanel panelLegend;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,4 +1,4 @@
-package GUI.Component.Chart.BarChart;
+package com.raven.chart;
 
 public class ModelChart {
 
